@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="423.0" prefWidth="600.0" styleClass="root1" stylesheets="@../fondo.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.VentaspendientesController">
+   <children>
+      <TableView fx:id="tblviewVentas" layoutX="159.0" layoutY="112.0" prefHeight="228.0" prefWidth="282.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Producto" />
+          <TableColumn prefWidth="75.0" text="Codigo" />
+            <TableColumn prefWidth="75.0" text="Precio" />
+        </columns>
+      </TableView>
+      <Label layoutX="243.0" layoutY="63.0" text="Ventas Pendientes" />
+      <ImageView fitHeight="32.0" fitWidth="43.0" layoutX="22.0" layoutY="377.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Downloads/arrow_back_rewind-512.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

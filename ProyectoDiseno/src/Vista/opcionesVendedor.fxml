@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.OpcionesVendedorController">
+   <children>
+      <JFXButton fx:id="btnMisVentas" layoutX="135.0" layoutY="124.0" onAction="#accionMisVentas" prefHeight="51.0" prefWidth="116.0" text="Mis Ventas" />
+      <JFXButton fx:id="btnMisProductos" layoutX="331.0" layoutY="124.0" onAction="#accionMisproductos" prefHeight="51.0" prefWidth="116.0" text="Mis productos" />
+      <JFXButton fx:id="btnCerrarSesion" layoutX="54.0" layoutY="313.0" onAction="#accionCerrar" text="Cerrar Sesion" />
+   </children>
+</AnchorPane>

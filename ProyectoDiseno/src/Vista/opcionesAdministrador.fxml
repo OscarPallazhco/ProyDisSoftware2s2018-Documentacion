@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="root6" stylesheets="@../fondo.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.OpcionesAdministradorController">
+   <children>
+      <JFXButton fx:id="btnAdminUsers" layoutX="38.0" layoutY="127.0" onAction="#accionAdminUsers" prefHeight="89.0" prefWidth="247.0" styleClass="record-sales" stylesheets="@../styles1.css" text="Administrar Usuarios" />
+      <JFXButton fx:id="btnAdminProductos" layoutX="308.0" layoutY="127.0" onAction="#accionAdminProductos" prefHeight="89.0" prefWidth="247.0" styleClass="record-sales" stylesheets="@../styles1.css" text="Administrar Productos" />
+      <JFXButton fx:id="btnCerrarSesion" layoutX="23.0" layoutY="325.0" onAction="#accionCerrar" styleClass="buttonRed2" stylesheets="@../NetBeansProjects/Nueva%20Carpeta/Turnos/src/Vista/style.css" text="Cerrar Sesion" />
+   </children>
+</Pane>

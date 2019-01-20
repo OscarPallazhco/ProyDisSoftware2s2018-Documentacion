@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="736.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MisproductsController">
+   <children>
+      <TableView fx:id="tblproductos" layoutY="-5.0" onMouseClicked="#accionClick" prefHeight="474.0" prefWidth="467.0">
+         <columns>
+            <TableColumn fx:id="cNombre" prefWidth="75.0" text="Nombre" />
+            <TableColumn fx:id="cPrecio" prefWidth="45.0" text="Precio" />
+            <TableColumn fx:id="cCategoria" prefWidth="82.0" text="Categoria" />
+            <TableColumn fx:id="cDescripcion" prefWidth="79.0" text="Descripcion" />
+            <TableColumn fx:id="cTiempo" prefWidth="104.0" text="Tiempo Entrega" />
+            <TableColumn fx:id="cVendedor" prefWidth="81.0" text="Vendedor" />
+         </columns>
+      </TableView>
+      <JFXTextField fx:id="txtNombre" layoutX="514.0" layoutY="28.0" promptText="Nombre" />
+      <JFXTextField fx:id="txtPrecio" layoutX="514.0" layoutY="75.0" promptText="Precio" />
+      <JFXTextField fx:id="txtCategoria" layoutX="514.0" layoutY="126.0" promptText="Categoria" />
+      <JFXTextField fx:id="txtDescripcion" layoutX="514.0" layoutY="182.0" promptText="Descripcion" />
+      <JFXTextField fx:id="txtEntrega" layoutX="514.0" layoutY="237.0" promptText="Tiempo Entrega" />
+      <JFXButton fx:id="btnAgregar" layoutX="480.0" layoutY="305.0" onAction="#accionAgregar" text="Agregar" />
+      <JFXButton fx:id="btnModificar" layoutX="567.0" layoutY="305.0" onAction="#accionModificar" text="Modificar" />
+      <JFXButton fx:id="btnEliminar" layoutX="655.0" layoutY="305.0" onAction="#accionEliminar" text="Eliminar" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="567.0" styleClass="root1" stylesheets="@../fondo.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.RegistroController">
+   <children>
+      <JFXTextField fx:id="txtNombres" layoutX="190.0" layoutY="52.0" prefHeight="27.0" prefWidth="199.0" promptText="Nombres">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtApellidos" layoutX="190.0" layoutY="88.0" prefHeight="27.0" prefWidth="199.0" promptText="Apellidos" />
+      <JFXTextField fx:id="txtTelefono" layoutX="190.0" layoutY="123.0" prefHeight="27.0" prefWidth="199.0" promptText="Telefono" />
+      <JFXTextField fx:id="txtcedula" layoutX="190.0" layoutY="225.0" prefHeight="27.0" prefWidth="199.0" promptText="Cedula" />
+      <JFXTextField fx:id="txtDireccion" layoutX="190.0" layoutY="263.0" prefHeight="27.0" prefWidth="199.0" promptText="Direccion" />
+      <JFXTextField fx:id="txtMatricula" layoutX="190.0" layoutY="301.0" prefHeight="27.0" prefWidth="199.0" promptText="Matricula" />
+      <JFXTextField fx:id="txtEmail" layoutX="190.0" layoutY="343.0" prefHeight="27.0" prefWidth="199.0" promptText="Email" />
+      <Label layoutX="190.0" layoutY="169.0" prefHeight="47.0" prefWidth="117.0" stylesheets="@../styles1.css" text="Tiene Whatsapp?" />
+      <JFXButton fx:id="btnRegistrar" layoutX="153.0" layoutY="542.0" onAction="#accionRegistrar" styleClass="dark-blue" stylesheets="@../styles1.css" text="Registrar" />
+      <JFXButton fx:id="btnCancelar" layoutX="325.0" layoutY="534.0" onAction="#accionCancelar" prefHeight="43.0" prefWidth="128.0" styleClass="dark-blue" stylesheets="@../styles1.css" text="Cancelar" />
+      <JFXCheckBox fx:id="checkSi" layoutX="325.0" layoutY="184.0" text="Si" />
+      <JFXRadioButton fx:id="rbVendedor" layoutX="190.0" layoutY="397.0" text="Vendedor" />
+      <JFXRadioButton fx:id="rbComprador" layoutX="325.0" layoutY="397.0" text="Comprador">
+         <toggleGroup>
+            <ToggleGroup fx:id="group" />
+         </toggleGroup>
+      </JFXRadioButton>
+      <JFXPasswordField fx:id="txtPass" layoutX="190.0" layoutY="485.0" prefHeight="27.0" prefWidth="199.0" promptText="Contrasena" />
+      <JFXTextField fx:id="txtUser" layoutX="190.0" layoutY="437.0" prefHeight="27.0" prefWidth="199.0" promptText="Usuario" />
+   </children>
+</Pane>

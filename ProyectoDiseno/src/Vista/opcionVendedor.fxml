@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.OpcionVendedorController">
+   <children>
+      <JFXButton fx:id="btnComprar" layoutX="110.0" layoutY="151.0" onAction="#accionComprar" prefHeight="49.0" prefWidth="129.0" text="Comprar" />
+      <JFXButton fx:id="btnVender" layoutX="323.0" layoutY="151.0" onAction="#accionVender" prefHeight="49.0" prefWidth="129.0" text="Vender" />
+   </children>
+</AnchorPane>
