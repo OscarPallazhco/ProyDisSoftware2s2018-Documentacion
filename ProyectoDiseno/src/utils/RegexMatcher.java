@@ -5,6 +5,7 @@
  */
 package utils;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -30,6 +31,12 @@ public class RegexMatcher {
     }
     public static boolean testEmail(String email){
         return Pattern.matches("[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}", email);
+    }
+    
+    public static boolean testSearch(String palabra,String cadena){
+            Pattern regex1 = Pattern.compile("\\b" + Pattern.quote(palabra) + "\\b", Pattern.CASE_INSENSITIVE);
+            Matcher match = regex1.matcher(cadena);
+            return match.find();
     }
     
 }
