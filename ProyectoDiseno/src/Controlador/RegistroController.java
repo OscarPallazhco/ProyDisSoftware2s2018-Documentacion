@@ -17,6 +17,8 @@ import java.net.URL;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +26,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import utils.RegexMatcher;
@@ -67,13 +70,17 @@ public class RegistroController implements Initializable {
     private JFXTextField txtUser;
    
     private Connection conectar;
+    private String rol;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        rbVendedor.setUserData("Vendedor");
+        rbComprador.setUserData("Comprador");
         rbVendedor.setToggleGroup(group);
         rbComprador.setToggleGroup(group);
+        seleccionRol();
         // TODO
          
        
@@ -82,8 +89,12 @@ public class RegistroController implements Initializable {
     @FXML
     private void accionRegistrar(ActionEvent event) throws SQLException {
         
-        if(validarTextField()){
-            guardarDatos();
+        if(validarTextField() && rol.equals("Comprador")){
+            guardarDatos("{CALL ingresarComprador(?,?,?,?,?,?,?,?,?)}");
+            guardarUsuario("Comprador");
+        }else if(validarTextField() && rol.equals("Vendedor")){
+            guardarDatos("{CALL ingresarVendedor(?,?,?,?,?,?,?,?,?)}");
+            guardarUsuario("Vendedor");
         }
 
     }
@@ -123,10 +134,10 @@ public class RegistroController implements Initializable {
         
     }
     
-    private void guardarDatos() throws SQLException{
+    private void guardarDatos(String usuario) throws SQLException{
         
         conectar=SingleConexionBD.conectar();
-        String query1= "{CALL ingresarComprador(?,?,?,?,?,?,?,?)}";
+        String query1= usuario;
         CallableStatement  stmt = conectar.prepareCall(query1);
         stmt.setString("nombreUsuario", txtUser.getText());
         stmt.setString("nombre", txtNombres.getText());
@@ -136,8 +147,29 @@ public class RegistroController implements Initializable {
         stmt.setString("direccion", txtDireccion.getText());
         stmt.setString("matricula", txtMatricula.getText());
         stmt.setBoolean("tieneWhatsapp", checkSi.isSelected());
+        stmt.setString("telefono", txtTelefono.getText());
+        
 
         stmt.executeQuery();
         System.out.println("datos ingresados con exito");
+    }
+    private void guardarUsuario(String rol) throws SQLException{
+        String query="{CALL ingresarUsuario(?,?,?)}";
+        CallableStatement  stmt=SingleConexionBD.conectar().prepareCall(query);
+        stmt.setString("nombreUsuario",txtUser.getText().trim());
+        stmt.setString("contrasena", txtUser.getText());
+        stmt.setString("rol", rol);
+        stmt.executeQuery();
+        
+    }
+    private void seleccionRol(){
+        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+                if (group.getSelectedToggle() != null) {
+                rol=group.getSelectedToggle().getUserData().toString(); }
+            }
+        
+    });
     }
 }

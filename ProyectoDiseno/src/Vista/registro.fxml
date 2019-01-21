@@ -27,12 +27,11 @@
       <JFXButton fx:id="btnRegistrar" layoutX="153.0" layoutY="542.0" onAction="#accionRegistrar" styleClass="dark-blue" stylesheets="@../styles1.css" text="Registrar" />
       <JFXButton fx:id="btnCancelar" layoutX="325.0" layoutY="534.0" onAction="#accionCancelar" prefHeight="43.0" prefWidth="128.0" styleClass="dark-blue" stylesheets="@../styles1.css" text="Cancelar" />
       <JFXCheckBox fx:id="checkSi" layoutX="325.0" layoutY="184.0" text="Si" />
-      <JFXRadioButton fx:id="rbVendedor" layoutX="190.0" layoutY="397.0" text="Vendedor" />
-      <JFXRadioButton fx:id="rbComprador" layoutX="325.0" layoutY="397.0" text="Comprador">
+      <JFXRadioButton fx:id="rbVendedor" layoutX="190.0" layoutY="397.0" text="Vendedor">
          <toggleGroup>
             <ToggleGroup fx:id="group" />
-         </toggleGroup>
-      </JFXRadioButton>
+         </toggleGroup></JFXRadioButton>
+      <JFXRadioButton fx:id="rbComprador" layoutX="325.0" layoutY="397.0" text="Comprador" toggleGroup="$group" />
       <JFXPasswordField fx:id="txtPass" layoutX="190.0" layoutY="485.0" prefHeight="27.0" prefWidth="199.0" promptText="Contrasena" />
       <JFXTextField fx:id="txtUser" layoutX="190.0" layoutY="437.0" prefHeight="27.0" prefWidth="199.0" promptText="Usuario" />
    </children>
