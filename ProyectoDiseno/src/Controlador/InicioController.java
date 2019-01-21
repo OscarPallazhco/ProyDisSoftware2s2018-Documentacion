@@ -44,7 +44,7 @@ public class InicioController implements Initializable {
     @FXML
     private TableView<Producto> masBuscados;
     @FXML
-    private TableView<?> nuevos;
+    private TableView<Producto> nuevos;
     @FXML
     private JFXButton btnIngresar;
     
@@ -61,6 +61,18 @@ public class InicioController implements Initializable {
     private TableColumn<Producto, String> tbldescripcion;
     @FXML
     private TableColumn<Producto, Integer> tbltiempo;
+    @FXML
+    private TableColumn<Producto, String> cNombre;
+    @FXML
+    private TableColumn<Producto, Float> cPrecio;
+    @FXML
+    private TableColumn<Producto, String> cCategoria;
+    @FXML
+    private TableColumn<Producto, String> cDescripcion;
+    @FXML
+    private TableColumn<Producto, Float> cTiempoEntrega;
+    
+    ObservableList<Producto> oblistNuevos=FXCollections.observableArrayList();
     /**
      * Initializes the controller class.
      */
@@ -68,16 +80,13 @@ public class InicioController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             cargarDatos();
+            cargarNuevos();
             // TODO
         } catch (SQLException ex) {
             Logger.getLogger(InicioController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        tblnombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        tblprecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
-        tblcategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
-        tbltiempo.setCellValueFactory(new PropertyValueFactory<>("tiempoEntrega"));
-        tbldescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-        masBuscados.setItems(oblist);
+        setMasBuscados();
+        setNuevos();
         
     }    
 
@@ -96,25 +105,25 @@ public class InicioController implements Initializable {
 
     }
     
-    private LinkedList<Producto> cargarDatos() throws SQLException{
-        LinkedList<Producto> productos=new LinkedList<>();
+    private void cargarDatos() throws SQLException{
+        
         Connection conectar = SingleConexionBD.conectar();
         String query="select * from Productos";
         Statement stmt = conectar.createStatement(); 
         ResultSet rs = stmt.executeQuery(query);
         while(rs.next()){
             String nombre= rs.getString("nombre");
-            System.out.println(nombre);
+            
             String descripcion=rs.getString("descripcion");
             String categoria=rs.getString("categoria");
             float precio=rs.getFloat("precio");
             int tiempo=rs.getInt("tiempoEntrega");
             Producto p=new Producto(nombre, descripcion, categoria, tiempo, precio);
-            productos.add(p);
+            
             oblist.add(p);
         }
         
-        return productos;
+        
     }
 
 
@@ -137,5 +146,39 @@ public class InicioController implements Initializable {
         }
     }
     
+    private void cargarNuevos() throws SQLException{
+      String query="select * from Productos";
+      Statement stmt=  SingleConexionBD.conectar().createStatement();
+       ResultSet rs = stmt.executeQuery(query);
+        while(rs.next()){
+            String nombre= rs.getString("nombre");
+            
+            String descripcion=rs.getString("descripcion");
+            String categoria=rs.getString("categoria");
+            float precio=rs.getFloat("precio");
+            int tiempo=rs.getInt("tiempoEntrega");
+            Producto p=new Producto(nombre, descripcion, categoria, tiempo, precio);
+            
+            oblistNuevos.add(p);
+        }
+    }
+    private void setMasBuscados(){
+        tblnombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        tblprecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
+        tblcategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+        tbltiempo.setCellValueFactory(new PropertyValueFactory<>("tiempoEntrega"));
+        tbldescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        masBuscados.setItems(oblist);
+        
+    }
+    private void setNuevos(){
+        cNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        cPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
+        cCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+        cTiempoEntrega.setCellValueFactory(new PropertyValueFactory<>("tiempoEntrega"));
+        cDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        nuevos.setItems(oblistNuevos);
+        
+    }
 }
 

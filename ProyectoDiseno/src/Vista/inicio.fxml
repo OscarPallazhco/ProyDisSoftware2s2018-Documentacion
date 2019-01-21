@@ -7,21 +7,24 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="388.0" prefWidth="666.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.InicioController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="897.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.InicioController">
    <children>
-      <TableView fx:id="masBuscados" layoutX="14.0" layoutY="98.0" onMouseClicked="#accionProducto" prefHeight="228.0" prefWidth="424.0">
+      <TableView fx:id="masBuscados" layoutX="14.0" layoutY="98.0" onMouseClicked="#accionProducto" prefHeight="342.0" prefWidth="432.0">
         <columns>
           <TableColumn fx:id="tblnombre" prefWidth="75.0" text="Nombre" />
           <TableColumn fx:id="tblprecio" prefWidth="75.0" text="Precio" />
             <TableColumn fx:id="tblcategoria" prefWidth="75.0" text="Categoria" />
-            <TableColumn fx:id="tbldescripcion" prefWidth="75.0" text="Descripcion" />
-            <TableColumn fx:id="tbltiempo" prefWidth="75.0" text="Tiempo Entrega" />
+            <TableColumn fx:id="tbldescripcion" prefWidth="91.0" text="Descripcion" />
+            <TableColumn fx:id="tbltiempo" prefWidth="115.0" text="Tiempo Entrega" />
         </columns>
       </TableView>
-      <TableView fx:id="nuevos" layoutX="522.0" layoutY="129.0" prefHeight="175.0" prefWidth="97.0">
+      <TableView fx:id="nuevos" layoutX="454.0" layoutY="98.0" prefHeight="342.0" prefWidth="432.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Nombre" />
-          <TableColumn prefWidth="75.0" text="Precio" />
+          <TableColumn fx:id="cNombre" prefWidth="75.0" text="Nombre" />
+          <TableColumn fx:id="cPrecio" prefWidth="51.0" text="Precio" />
+            <TableColumn fx:id="cCategoria" prefWidth="83.0" text="Categoria" />
+            <TableColumn fx:id="cDescripcion" prefWidth="113.0" text="Descripcion" />
+            <TableColumn fx:id="cTiempoEntrega" prefWidth="109.0" text="Tiempo Entrega" />
         </columns>
       </TableView>
       <Label layoutX="32.0" layoutY="42.0" text="Articulos Mas buscados">
@@ -29,11 +32,11 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="450.0" layoutY="72.0" text="Articulos Nuevos">
+      <Label layoutX="541.0" layoutY="42.0" text="Articulos Nuevos">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <JFXButton fx:id="btnIngresar" layoutX="453.0" layoutY="26.0" onAction="#accionIngresar" styleClass="bevel-grey" stylesheets="@../styles1.css" text="Ingresar" />
+      <JFXButton fx:id="btnIngresar" layoutX="399.0" layoutY="14.0" onAction="#accionIngresar" styleClass="bevel-grey" stylesheets="@../styles1.css" text="Ingresar" />
    </children>
 </AnchorPane>
