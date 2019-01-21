@@ -12,14 +12,20 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import com.mysql.jdbc.Connection;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.Stage;
 import utils.RegexMatcher;
 
 /**
@@ -83,7 +89,18 @@ public class RegistroController implements Initializable {
     }
 
     @FXML
-    private void accionCancelar(ActionEvent event) {
+    private void accionCancelar(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/opcionesAdministrador.fxml"));
+        
+        Parent homepParent=loader.load();
+
+        Scene scene =new Scene(homepParent);
+        Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+        
+        mainstage.hide();
+        mainstage.setScene(scene);
+        mainstage.show();
+        
     }
     
     private boolean validarTextField(){

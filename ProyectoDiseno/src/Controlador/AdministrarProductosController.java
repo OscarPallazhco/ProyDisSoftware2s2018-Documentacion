@@ -17,8 +17,6 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,20 +33,22 @@ import utils.SingleConexionBD;
  *
  * @author Patricio
  */
-public class MisproductsController implements Initializable {
+public class AdministrarProductosController implements Initializable {
 
     @FXML
     private TableView<Producto> tblproductos;
     @FXML
-    private TableColumn<Producto,String> cNombre;
+    private TableColumn<Producto, String> cNombre;
     @FXML
-    private TableColumn<Producto,Float> cPrecio;
+    private TableColumn<Producto, Float> cPrecio;
     @FXML
     private TableColumn<Producto, String> cCategoria;
     @FXML
     private TableColumn<Producto, String> cDescripcion;
     @FXML
-    private TableColumn<Producto, Integer> cTiempo;
+    private TableColumn<Producto, Float> cTiempo;
+    @FXML
+    private TableColumn<String,String> cVendedor;
     @FXML
     private JFXTextField txtNombre;
     @FXML
@@ -65,9 +65,9 @@ public class MisproductsController implements Initializable {
     private JFXButton btnModificar;
     @FXML
     private JFXButton btnEliminar;
-    private Vendedor vendedor;
     ObservableList<Producto> oblist=FXCollections.observableArrayList();
     private int posicionProducto;
+
     /**
      * Initializes the controller class.
      */
@@ -76,62 +76,34 @@ public class MisproductsController implements Initializable {
         try {
             llenarTabla();
         } catch (SQLException ex) {
-            Logger.getLogger(MisproductsController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AdministrarProductosController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         cNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         cPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
         cCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
         cDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         cTiempo.setCellValueFactory(new PropertyValueFactory<>("tiempoEntrega"));
         tblproductos.setItems(oblist);
-        
-        tblproductos.getSelectionModel().selectedItemProperty().addListener(new ChangeListener(){
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                Producto p=(Producto) newValue;
-                if(p!=null){
-                    txtNombre.setText(p.getNombre());
-                    txtCategoria.setText(p.getCategoria());
-                    txtDescripcion.setText(p.getDescripcion());
-                    txtPrecio.setText(Float.toString(p.getPrecio()));
-                    txtEntrega.setText(Integer.toString((int) p.getTiempoEntrega()));
-                }
-            }
-            
-        });
-        // TODO
     }    
-    
-    public void setVendedor(Vendedor vendedor){
-        this.vendedor=vendedor;
+
+    @FXML
+    private void accionClick(MouseEvent event) {
     }
+
     @FXML
     private void accionAgregar(ActionEvent event) {
     }
 
     @FXML
     private void accionModificar(ActionEvent event) {
-        Producto p= (Producto) tblproductos.getSelectionModel().getSelectedItem();
-        posicionProducto=oblist.indexOf(p);
-        p.setNombre(txtNombre.getText());
-        p.setPrecio(Float.parseFloat(txtPrecio.getText()));
-        p.setCategoria(txtCategoria.getText());
-        p.setDescripcion(txtDescripcion.getText());
-        p.setTiempoEntrega(Float.parseFloat(txtEntrega.getText()));
-        oblist.set(posicionProducto, p);
-        
     }
 
     @FXML
     private void accionEliminar(ActionEvent event) {
-        Producto p= (Producto) tblproductos.getSelectionModel().getSelectedItem();
-        oblist.remove(p);
     }
-    
     private void llenarTabla() throws SQLException{
         Connection conectar = SingleConexionBD.conectar();
-        String query="select * from Productos where vendedor='josedel'";
+        String query="select * from Productos";
         Statement stmt = conectar.createStatement(); 
         ResultSet rs = stmt.executeQuery(query);
         while(rs.next()){
@@ -145,9 +117,5 @@ public class MisproductsController implements Initializable {
             
             oblist.add(p);
         }
-    }
-
-    @FXML
-    private void accionClick(MouseEvent event) {
     }
 }

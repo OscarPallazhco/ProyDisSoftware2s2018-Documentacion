@@ -86,8 +86,7 @@ public class InicioController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/inicioSesion.fxml"));
         
         Parent homepParent=loader.load();
-        InicioSesionController controla=loader.getController();
-        controla.getDato("soy uriel");
+
         Scene scene =new Scene(homepParent);
         Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
         
