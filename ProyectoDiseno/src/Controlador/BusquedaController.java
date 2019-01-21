@@ -8,11 +8,14 @@ package Controlador;
 import Modelo.Producto;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import com.mysql.jdbc.CallableStatement;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,7 +47,7 @@ public class BusquedaController implements Initializable {
     @FXML
     private TableView<Producto> tblviewBusqueda;
     
-    private LinkedList<Producto> productos,coincidencias;
+    private LinkedList<Producto> productos;
     @FXML
     private TableColumn<Producto, String> cNombre;
     @FXML
@@ -54,14 +57,16 @@ public class BusquedaController implements Initializable {
     @FXML
     private TableColumn<Producto, String> cDescripcion;
     ObservableList<Producto> oblist=FXCollections.observableArrayList();
+    HashMap<Integer,Producto> coincidencias;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        productos=new LinkedList<>();
-        coincidencias=new LinkedList<>();
+        coincidencias =new HashMap<>();
+       
+        
         try {
             cargarProductos();
             
@@ -76,10 +81,11 @@ public class BusquedaController implements Initializable {
     }
 
     @FXML
-    private void accionBuscar(ActionEvent event) {
+    private void accionBuscar(ActionEvent event) throws SQLException {
         busqueda();
         setDatos();
     }
+    //
     
     private void  cargarProductos() throws SQLException{
         SingleConexionBD.conectar();
@@ -87,6 +93,7 @@ public class BusquedaController implements Initializable {
         Statement stmt = SingleConexionBD.conectar().createStatement(); 
         ResultSet rs = stmt.executeQuery(query);
          while(rs.next()){
+            Integer id=rs.getInt("id");
             String nombre= rs.getString("nombre");
             System.out.println(nombre);
             String descripcion=rs.getString("descripcion");
@@ -94,21 +101,24 @@ public class BusquedaController implements Initializable {
             float precio=rs.getFloat("precio");
             int tiempo=rs.getInt("tiempoEntrega");
             Producto p=new Producto(nombre, descripcion, categoria, tiempo, precio);
-            productos.add(p);
+            
+            coincidencias.put(id, p);
          }
     }
     
-    private void busqueda(){
-
-            for (Producto producto : productos) {
-                if(RegexMatcher.testSearch(txtBuscar.getText(), producto.getNombre())||
-                        RegexMatcher.testSearch(txtBuscar.getText(), producto.getDescripcion())){
-                    coincidencias.add(producto);
-                    oblist.add(producto);
-                }
-                
-            
+    private void busqueda() throws SQLException{
+        
+            for (Map.Entry<Integer, Producto> entry : coincidencias.entrySet()) {
+            Integer key = entry.getKey();
+            Producto value = entry.getValue();
+            if(RegexMatcher.testSearch(txtBuscar.getText(), value.getNombre())||
+                    RegexMatcher.testSearch(txtBuscar.getText(), value.getDescripcion())){
+                updateSearch(key);
+                oblist.add(value);
+            }
         }
+
+
         }
     
     private void llenarTable(){
@@ -122,6 +132,18 @@ public class BusquedaController implements Initializable {
         cCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
         cDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         tblviewBusqueda.setItems(oblist);
+    }
+    
+    private void updateSearch(Integer id) throws SQLException{
+        
+        SingleConexionBD.conectar();
+        String query="{CALL actualizarBusqueda(?)}";
+        java.sql.CallableStatement  stmt=SingleConexionBD.conectar().prepareCall(query);
+        
+        stmt.setInt("iduser", id);
+        stmt.executeQuery();
+        
+        
     }
     }
     

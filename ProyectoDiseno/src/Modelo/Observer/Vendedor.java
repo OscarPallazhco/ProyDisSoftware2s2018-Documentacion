@@ -25,6 +25,7 @@ public class Vendedor extends Usuario{
         this.productos = new LinkedList<>();
         
     }
+   
 
     public float getCalificacion() {
         return calificacion;

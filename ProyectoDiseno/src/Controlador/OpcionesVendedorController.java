@@ -31,7 +31,8 @@ public class OpcionesVendedorController implements Initializable {
     private JFXButton btnMisProductos;
     @FXML
     private JFXButton btnCerrarSesion;
-
+    
+    public static String user;
     /**
      * Initializes the controller class.
      */
@@ -51,15 +52,26 @@ public class OpcionesVendedorController implements Initializable {
         mainstage.show();
     
     }
+    
+    public void getUser(String us){
+        this.user=us;
+    }
 
     @FXML
     private void accionMisproductos(ActionEvent event) throws IOException {
-        Parent homepParent=FXMLLoader.load(getClass().getResource("/Vista/misproducts.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/misproducts.fxml"));
+        Parent homepParent=loader.load();
+        MisproductsController v=loader.getController();
+        
+        v.setUserName(user);
+        System.out.println("ventana opciones "+user);
         Scene scene =new Scene(homepParent);
         Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+        
         mainstage.hide();
         mainstage.setScene(scene);
         mainstage.show();
+
     }
     
 

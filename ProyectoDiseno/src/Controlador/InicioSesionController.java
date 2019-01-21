@@ -153,7 +153,9 @@ public class InicioSesionController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/opcionVendedor.fxml"));
         
         Parent homepParent=loader.load();
-
+        OpcionVendedorController v=loader.getController();
+        v.getUser(txtUser.getText());
+        System.out.println(txtUser.getText() + " ventana iniciosension");
         Scene scene =new Scene(homepParent);
         Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
         

@@ -108,7 +108,9 @@ public class InicioController implements Initializable {
     private void cargarDatos() throws SQLException{
         
         Connection conectar = SingleConexionBD.conectar();
-        String query="select * from Productos";
+        String query="select * from productos "
+              + "ORDER BY numeroBusquedas DESC  "
+              + "LIMIT 15";
         Statement stmt = conectar.createStatement(); 
         ResultSet rs = stmt.executeQuery(query);
         while(rs.next()){
@@ -147,7 +149,9 @@ public class InicioController implements Initializable {
     }
     
     private void cargarNuevos() throws SQLException{
-      String query="select * from Productos";
+      String query="select * from productos "
+              + "order by id desc "
+              + "LIMIT 15";
       Statement stmt=  SingleConexionBD.conectar().createStatement();
        ResultSet rs = stmt.executeQuery(query);
         while(rs.next()){

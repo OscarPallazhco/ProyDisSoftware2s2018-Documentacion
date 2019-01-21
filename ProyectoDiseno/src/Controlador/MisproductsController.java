@@ -68,11 +68,13 @@ public class MisproductsController implements Initializable {
     private Vendedor vendedor;
     ObservableList<Producto> oblist=FXCollections.observableArrayList();
     private int posicionProducto;
+    private String userName;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        System.out.println(userName);
         try {
             llenarTabla();
         } catch (SQLException ex) {
@@ -102,7 +104,9 @@ public class MisproductsController implements Initializable {
         });
         // TODO
     }    
-    
+    public void setUserName(String user){
+        this.userName=user;
+    }
     public void setVendedor(Vendedor vendedor){
         this.vendedor=vendedor;
     }
@@ -130,8 +134,11 @@ public class MisproductsController implements Initializable {
     }
     
     private void llenarTabla() throws SQLException{
+        String dato="'";
+        String userb=dato+OpcionesVendedorController.user+dato;
+        System.out.println(userName);
         Connection conectar = SingleConexionBD.conectar();
-        String query="select * from Productos where vendedor='josedel'";
+        String query="select * from Productos where vendedor="+userb;
         Statement stmt = conectar.createStatement(); 
         ResultSet rs = stmt.executeQuery(query);
         while(rs.next()){
