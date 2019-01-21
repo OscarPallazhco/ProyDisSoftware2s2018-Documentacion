@@ -7,6 +7,7 @@ package utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.scene.control.Alert;
 
 /**
  *
@@ -37,6 +38,14 @@ public class RegexMatcher {
             Pattern regex1 = Pattern.compile("\\b" + Pattern.quote(palabra) + "\\b", Pattern.CASE_INSENSITIVE);
             Matcher match = regex1.matcher(cadena);
             return match.find();
+    }
+    public static void errormsj(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        	alert.setTitle("Mensaje");
+        	alert.setHeaderText(message);
+        	
+        	alert.showAndWait();
+        
     }
     
 }

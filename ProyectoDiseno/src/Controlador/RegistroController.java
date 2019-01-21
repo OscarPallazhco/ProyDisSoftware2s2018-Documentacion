@@ -87,30 +87,32 @@ public class RegistroController implements Initializable {
     }    
 
     @FXML
-    private void accionRegistrar(ActionEvent event) throws SQLException {
+    private void accionRegistrar(ActionEvent event) throws SQLException, IOException {
         
         if(validarTextField() && rol.equals("Comprador")){
             guardarDatos("{CALL ingresarComprador(?,?,?,?,?,?,?,?,?)}");
             guardarUsuario("Comprador");
+            RegexMatcher.errormsj("Registro Exitoso");
+            gotoLogin(event);
+            
         }else if(validarTextField() && rol.equals("Vendedor")){
             guardarDatos("{CALL ingresarVendedor(?,?,?,?,?,?,?,?,?)}");
             guardarUsuario("Vendedor");
+            RegexMatcher.errormsj("Registro Exitoso");
+            gotoLogin(event);
+        }else{
+            RegexMatcher.errormsj("DATOS INCORRECTOS O CAMPOS EN BLANCO");
+            limpiarTextfield();
         }
+        
 
     }
 
     @FXML
     private void accionCancelar(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/opcionesAdministrador.fxml"));
         
-        Parent homepParent=loader.load();
+        limpiarTextfield();
 
-        Scene scene =new Scene(homepParent);
-        Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
-        
-        mainstage.hide();
-        mainstage.setScene(scene);
-        mainstage.show();
         
     }
     
@@ -157,7 +159,7 @@ public class RegistroController implements Initializable {
         String query="{CALL ingresarUsuario(?,?,?)}";
         CallableStatement  stmt=SingleConexionBD.conectar().prepareCall(query);
         stmt.setString("nombreUsuario",txtUser.getText().trim());
-        stmt.setString("contrasena", txtUser.getText());
+        stmt.setString("contrasena", txtPass.getText());
         stmt.setString("rol", rol);
         stmt.executeQuery();
         
@@ -171,5 +173,30 @@ public class RegistroController implements Initializable {
             }
         
     });
+    }
+    private void limpiarTextfield(){
+        txtApellidos.clear();
+        txtNombres.clear();
+        txtDireccion.clear();
+        txtMatricula.clear();
+        txtUser.clear();
+        txtPass.clear();
+        txtEmail.clear();
+        txtTelefono.clear();
+        txtApellidos.clear();
+        txtcedula.clear();
+    }
+    
+    private void gotoLogin(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/inicioSesion.fxml"));
+        
+        Parent homepParent=loader.load();
+
+        Scene scene =new Scene(homepParent);
+        Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+        
+        mainstage.hide();
+        mainstage.setScene(scene);
+        mainstage.show();
     }
 }
