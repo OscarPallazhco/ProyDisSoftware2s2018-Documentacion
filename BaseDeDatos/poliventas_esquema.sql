@@ -84,29 +84,46 @@ CREATE TABLE Compras(
 );
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS ingresarVendedor$$
-CREATE PROCEDURE ingresarVendedor(nombreUsuario varchar(15),nombre varchar(15),apellido varchar(15),tieneWhatsapp boolean,correo varchar(40),
-	direccion varchar(30),cedula varchar(10),matricula varchar(9))
-BEGIN
-	INSERT INTO Vendedores (nombreUsuario,nombre,apellido,tieneWhatsapp,correo,direccion,cedula,matricula)
-	VALUES(nombreUsuario,nombre,apellido,tieneWhatsapp,correo,direccion,cedula,matricula);
-END$$
-
-DROP PROCEDURE IF EXISTS guardarProducto$$
-CREATE PROCEDURE guardarProducto(nombre varchar(50),descripcion varchar(500),categoria varchar(10),precio float,tiempoEntrega int,
-	vendedor varchar(10))
-BEGIN
-	INSERT INTO Productos (nombre,descripcion,categoria,precio,tiempoEntrega,vendedor)
-	VALUES(nombre,descripcion,categoria,precio,tiempoEntrega,vendedor);
-END$$
-
 DROP PROCEDURE IF EXISTS ingresarComprador$$
-CREATE PROCEDURE ingresarComprador(nombreUsuario varchar(15),nombre varchar(15),apellido varchar(15),tieneWhatsapp boolean,correo varchar(40),
-	direccion varchar(30),cedula varchar(10),matricula varchar(9))
+CREATE PROCEDURE ingresarComprador(nombreUsuario varchar(15),nombre VARCHAR(50),apellido varchar(20),tieneWhatsapp boolean,correo varchar(30),
+direccion varchar(30),cedula varchar(10),matricula varchar(9))
 BEGIN
-	INSERT INTO Compradores (nombreUsuario,nombre,apellido,tieneWhatsapp,correo,direccion,cedula,matricula)
-	VALUES(nombreUsuario,nombre,apellido,tieneWhatsapp,correo,direccion,cedula,matricula);
+INSERT INTO Compradores (nombreUsuario,nombre,apellido,tieneWhatsapp,correo,direccion,cedula,matricula)
+ VALUES(nombreUsuario,nombre,apellido,tieneWhatsapp,correo,direccion,cedula,matricula);
 END$$
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS ingresarVendedor$$
+CREATE PROCEDURE ingresarVendedor(nombreUsuario varchar(15),nombre VARCHAR(50),apellido varchar(20),tieneWhatsapp boolean,correo varchar(30),
+direccion varchar(30),cedula varchar(10),matricula varchar(9))
+BEGIN
+INSERT INTO Vendedores (nombreUsuario,nombre,apellido,tieneWhatsapp,correo,direccion,cedula,matricula)
+ VALUES(nombreUsuario,nombre,apellido,tieneWhatsapp,correo,direccion,cedula,matricula);
+END$$
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS guardarProducto$$
+CREATE PROCEDURE guardarProducto(nombre varchar(50),descripcion VARCHAR(500),categoria varchar(10),precio float,tiempoEntrega int,
+vendedor varchar(10))
+BEGIN
+INSERT INTO Productos (nombre,descripcion,categoria,precio,tiempoEntrega,vendedor)
+ VALUES(nombre,descripcion,categoria,precio,tiempoEntrega,vendedor);
+END$$
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS actualizarBusqueda$$
+CREATE PROCEDURE actualizarBusqueda(iduser int)
+BEGIN
+update Productos set numeroBusquedas=numeroBusquedas+1 where id=iduser ;
+END$$
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS eliminarProducto$$
+CREATE PROCEDURE eliminarProducto(iduser int)
+BEGIN
+update Productos set estado=0 where id=iduser ;
+END$$
+
 
 DELIMITER //
 CREATE TRIGGER trig_actualizarCalificacion BEFORE INSERT 
