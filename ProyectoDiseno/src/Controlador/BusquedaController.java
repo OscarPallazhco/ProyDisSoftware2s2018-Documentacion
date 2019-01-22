@@ -8,7 +8,6 @@ package Controlador;
 import Modelo.Producto;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import com.mysql.jdbc.CallableStatement;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +28,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import utils.RegexMatcher;
 import utils.SingleConexionBD;
-import static utils.SingleConexionBD.conectar;
 
 /**
  * FXML Controller class
@@ -89,7 +87,7 @@ public class BusquedaController implements Initializable {
     
     private void  cargarProductos() throws SQLException{
         SingleConexionBD.conectar();
-        String query="select * from Productos";
+        String query="select * from Productos where estado=1";
         Statement stmt = SingleConexionBD.conectar().createStatement(); 
         ResultSet rs = stmt.executeQuery(query);
          while(rs.next()){

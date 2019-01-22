@@ -10,24 +10,33 @@ import Modelo.Producto;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.mysql.jdbc.Connection;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import utils.SingleConexionBD;
 
 /**
@@ -69,23 +78,31 @@ public class MisproductsController implements Initializable {
     ObservableList<Producto> oblist=FXCollections.observableArrayList();
     private int posicionProducto;
     private String userName;
+    private HashMap<Integer,Producto> productos;
+    @FXML
+    private TableColumn<Producto, Integer> cId;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println(userName);
+        Platform.runLater(()->{
+                    System.out.println(userName);
+                    productos=new HashMap<>();
         try {
             llenarTabla();
         } catch (SQLException ex) {
             Logger.getLogger(MisproductsController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+            
+        });
+
         cNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         cPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
         cCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
         cDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         cTiempo.setCellValueFactory(new PropertyValueFactory<>("tiempoEntrega"));
+        cId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tblproductos.setItems(oblist);
         
         tblproductos.getSelectionModel().selectedItemProperty().addListener(new ChangeListener(){
@@ -111,7 +128,18 @@ public class MisproductsController implements Initializable {
         this.vendedor=vendedor;
     }
     @FXML
-    private void accionAgregar(ActionEvent event) {
+    private void accionAgregar(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/agregarproducto.fxml"));
+        
+        Parent homepParent=loader.load();
+        AgregarproductoController add=loader.getController();
+        add.setUser(userName);
+        Scene scene =new Scene(homepParent);
+        Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+        
+        mainstage.hide();
+        mainstage.setScene(scene);
+        mainstage.show();
     }
 
     @FXML
@@ -128,17 +156,20 @@ public class MisproductsController implements Initializable {
     }
 
     @FXML
-    private void accionEliminar(ActionEvent event) {
+    private void accionEliminar(ActionEvent event) throws SQLException {
         Producto p= (Producto) tblproductos.getSelectionModel().getSelectedItem();
+        eliminarProducto(p.getId());
         oblist.remove(p);
+        
+        
     }
     
-    private void llenarTabla() throws SQLException{
+    public void llenarTabla() throws SQLException{
         String dato="'";
-        String userb=dato+OpcionesVendedorController.user+dato;
-        System.out.println(userName);
+        String userb=dato+userName+dato;
+       
         Connection conectar = SingleConexionBD.conectar();
-        String query="select * from Productos where vendedor="+userb;
+        String query="select * from Productos where vendedor="+userb+" and estado=1";
         Statement stmt = conectar.createStatement(); 
         ResultSet rs = stmt.executeQuery(query);
         while(rs.next()){
@@ -148,7 +179,9 @@ public class MisproductsController implements Initializable {
             String categoria=rs.getString("categoria");
             float precio=rs.getFloat("precio");
             int tiempo=rs.getInt("tiempoEntrega");
-            Producto p=new Producto(nombre, descripcion, categoria, tiempo, precio);
+            int id=rs.getInt("id");
+            Producto p=new Producto(nombre, descripcion, categoria, tiempo, precio,id);
+            productos.put(id, p);
             
             oblist.add(p);
         }
@@ -156,5 +189,17 @@ public class MisproductsController implements Initializable {
 
     @FXML
     private void accionClick(MouseEvent event) {
+        
     }
+    
+    private void eliminarProducto(int id) throws SQLException{
+        SingleConexionBD.conectar();
+        String query="{CALL eliminarProducto(?)}";
+        java.sql.CallableStatement  stmt=SingleConexionBD.conectar().prepareCall(query);
+        
+        stmt.setInt("iduser", id);
+        stmt.executeQuery();
+    }
+    
+
 }

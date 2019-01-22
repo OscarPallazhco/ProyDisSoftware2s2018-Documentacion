@@ -109,6 +109,7 @@ public class InicioController implements Initializable {
         
         Connection conectar = SingleConexionBD.conectar();
         String query="select * from productos "
+                + "where estado=1 "
               + "ORDER BY numeroBusquedas DESC  "
               + "LIMIT 15";
         Statement stmt = conectar.createStatement(); 
@@ -150,6 +151,7 @@ public class InicioController implements Initializable {
     
     private void cargarNuevos() throws SQLException{
       String query="select * from productos "
+              + "where estado=1 "
               + "order by id desc "
               + "LIMIT 15";
       Statement stmt=  SingleConexionBD.conectar().createStatement();

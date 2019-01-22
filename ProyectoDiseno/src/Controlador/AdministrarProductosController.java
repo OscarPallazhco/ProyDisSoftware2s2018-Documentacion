@@ -5,7 +5,6 @@
  */
 package Controlador;
 
-import Modelo.Observer.Vendedor;
 import Modelo.Producto;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;

@@ -13,6 +13,9 @@ import java.net.URL;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -42,26 +45,36 @@ public class AgregarproductoController implements Initializable {
     private JFXButton btnCancelar;
     
     private Connection conectar;
-    private Vendedor vendedor;
+    private String user;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         // TODO
     }    
     
     
-    public void setUser(Vendedor vendedor){
-        this.vendedor=vendedor;
+    public void setUser(String user){
+        this.user=user;
     }
     @FXML
     private void accionAgregar(ActionEvent event) throws SQLException {
+        Platform.runLater(()->{
+            
+       
         if(validarFields()){
-            guardarDatos();
+            try {
+                guardarDatos();
+            } catch (SQLException ex) {
+                Logger.getLogger(AgregarproductoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             System.out.println("guardado");
         }
+        
+         });
     }
 
     @FXML
@@ -86,7 +99,7 @@ public class AgregarproductoController implements Initializable {
         stmt.setString("categoria", txtCategoria.getText());
         stmt.setFloat("precio", Float.parseFloat(txtPrecio.getText().trim()));
         stmt.setInt("tiempoEntrega", Integer.parseInt(txtTiempoEntrega.getText().trim()));
-        stmt.setString("vendedor","josedel");
+        stmt.setString("vendedor",user);
         
         
         stmt.executeQuery();

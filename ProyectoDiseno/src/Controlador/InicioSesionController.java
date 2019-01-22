@@ -14,7 +14,6 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -73,7 +72,7 @@ public class InicioSesionController implements Initializable {
             for (DataUser usuario : usuarios) {
                 if(usuario.getUser().equals(txtUser.getText().trim()) && usuario.getContrasena().equals(
                 txtPass.getText())){
-                    System.out.println(usuario.getUser());
+                    
                     temp=new DataUser(usuario.getUser(), usuario.getContrasena(), usuario.getRol());
                     
                 }
@@ -84,12 +83,14 @@ public class InicioSesionController implements Initializable {
                 }else if(temp.getRol().equals("Comprador")){
                     gotoComprador(event);
                 }else{
-                    goToAdmin(event);
+                    goToAdmin(event);}
+                }
+                    
                 }
             }
-        }
+        
 
-    }
+    
         
     
 

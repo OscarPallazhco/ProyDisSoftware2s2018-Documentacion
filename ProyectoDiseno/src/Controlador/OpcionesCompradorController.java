@@ -5,6 +5,7 @@
  */
 package Controlador;
 
+import Modelo.Comprador;
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
@@ -35,6 +36,8 @@ public class OpcionesCompradorController implements Initializable {
     private JFXButton btnCerrarSesion;
     @FXML
     private JFXButton btnMasBuscados;
+    
+    Comprador comprador;
 
     /**
      * Initializes the controller class.
@@ -42,6 +45,7 @@ public class OpcionesCompradorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
     }    
 
     @FXML

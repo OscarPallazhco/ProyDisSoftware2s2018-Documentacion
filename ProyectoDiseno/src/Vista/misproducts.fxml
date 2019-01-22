@@ -15,6 +15,7 @@
             <TableColumn fx:id="cCategoria" prefWidth="82.0" text="Categoria" />
             <TableColumn fx:id="cDescripcion" prefWidth="119.0" text="Descripcion" />
             <TableColumn fx:id="cTiempo" prefWidth="113.0" text="Tiempo Entrega" />
+            <TableColumn fx:id="cId" prefWidth="75.0" text="Id" />
         </columns>
       </TableView>
       <JFXTextField fx:id="txtNombre" layoutX="514.0" layoutY="28.0" promptText="Nombre" />

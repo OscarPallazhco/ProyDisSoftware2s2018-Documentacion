@@ -8,6 +8,7 @@ package Controlador;
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,12 +33,14 @@ public class OpcionesVendedorController implements Initializable {
     @FXML
     private JFXButton btnCerrarSesion;
     
-    public static String user;
+    String user;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        
         // TODO
     }    
 
@@ -58,8 +61,22 @@ public class OpcionesVendedorController implements Initializable {
     }
 
     @FXML
-    private void accionMisproductos(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/misproducts.fxml"));
+    private void accionMisproductos(ActionEvent event) throws IOException, SQLException {
+        
+        FXMLLoader load=new FXMLLoader();
+        load.setLocation(getClass().getResource("/Vista/misproducts.fxml"));
+        load.load();
+        MisproductsController productos=load.getController();
+        productos.setUserName(user);
+        
+        Parent p=load.getRoot();
+        Stage s=new Stage();
+        s.setScene(new Scene(p));
+        s.show();
+        
+        
+        
+        /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/misproducts.fxml"));
         Parent homepParent=loader.load();
         MisproductsController v=loader.getController();
         
@@ -70,7 +87,7 @@ public class OpcionesVendedorController implements Initializable {
         
         mainstage.hide();
         mainstage.setScene(scene);
-        mainstage.show();
+        mainstage.show(); */
 
     }
     
