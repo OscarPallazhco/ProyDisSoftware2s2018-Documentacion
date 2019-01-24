@@ -114,7 +114,7 @@ public class InicioSesionController implements Initializable {
          ResultSet rs = stmt.executeQuery(query);
         while(rs.next()){
             String user= rs.getString("nombreUsuario");
-            System.out.println(user);
+            
             String pass=rs.getString("contrasena");
             String rol=rs.getString("rol");
             DataUser u= new DataUser(user, pass, rol);
@@ -142,6 +142,8 @@ public class InicioSesionController implements Initializable {
         Parent homepParent=loader.load();
 
         Scene scene =new Scene(homepParent);
+        OpcionesCompradorController comp=loader.getController();
+        comp.getUser(txtUser.getText());
         Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
         
         mainstage.hide();

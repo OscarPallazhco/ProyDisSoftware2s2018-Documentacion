@@ -38,6 +38,8 @@ public class OpcionesCompradorController implements Initializable {
     private JFXButton btnMasBuscados;
     
     Comprador comprador;
+    
+    String user;
 
     /**
      * Initializes the controller class.
@@ -46,13 +48,24 @@ public class OpcionesCompradorController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         
-    }    
+    }   
+    
+    public void getUser(String user){
+        this.user=user;
+    }
 
     @FXML
     private void accionBuscar(ActionEvent event) throws IOException {
-        Parent homepParent=FXMLLoader.load(getClass().getResource("/Vista/busqueda.fxml"));
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/busqueda.fxml"));
+        
+        Parent homepParent=loader.load();
+
         Scene scene =new Scene(homepParent);
+        BusquedaController busqueda=loader.getController();
+        busqueda.getUsuario(user);
+        
         Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+        
         mainstage.hide();
         mainstage.setScene(scene);
         mainstage.show();

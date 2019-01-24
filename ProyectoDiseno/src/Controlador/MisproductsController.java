@@ -16,7 +16,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,7 +77,7 @@ public class MisproductsController implements Initializable {
     ObservableList<Producto> oblist=FXCollections.observableArrayList();
     private int posicionProducto;
     private String userName;
-    private HashMap<Integer,Producto> productos;
+    
     @FXML
     private TableColumn<Producto, Integer> cId;
     /**
@@ -88,7 +87,7 @@ public class MisproductsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(()->{
                     System.out.println(userName);
-                    productos=new HashMap<>();
+                    
         try {
             llenarTabla();
         } catch (SQLException ex) {
@@ -181,7 +180,7 @@ public class MisproductsController implements Initializable {
             int tiempo=rs.getInt("tiempoEntrega");
             int id=rs.getInt("id");
             Producto p=new Producto(nombre, descripcion, categoria, tiempo, precio,id);
-            productos.put(id, p);
+            
             
             oblist.add(p);
         }
@@ -199,6 +198,10 @@ public class MisproductsController implements Initializable {
         
         stmt.setInt("iduser", id);
         stmt.executeQuery();
+    }
+    
+    private void modificarProducto(){
+        
     }
     
 

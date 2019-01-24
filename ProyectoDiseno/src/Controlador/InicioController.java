@@ -133,12 +133,12 @@ public class InicioController implements Initializable {
     @FXML
     private void accionProducto(MouseEvent event) throws IOException {
         if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount()==2){
-         System.out.println("Bien ");
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/inicioSesion.fxml"));
         
         Parent homepParent=loader.load();
         InicioSesionController controla=loader.getController();
-        controla.getDato("soy uriel");
+        
         Scene scene =new Scene(homepParent);
         Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
         
