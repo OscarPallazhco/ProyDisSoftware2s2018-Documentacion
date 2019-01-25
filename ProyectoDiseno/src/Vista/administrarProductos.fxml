@@ -26,5 +26,6 @@
       <JFXButton fx:id="btnAgregar" layoutX="480.0" layoutY="305.0" onAction="#accionAgregar" text="Agregar" />
       <JFXButton fx:id="btnModificar" layoutX="567.0" layoutY="305.0" onAction="#accionModificar" text="Modificar" />
       <JFXButton fx:id="btnEliminar" layoutX="655.0" layoutY="305.0" onAction="#accionEliminar" text="Eliminar" />
+      <JFXButton fx:id="btnRegresar" layoutX="480.0" layoutY="427.0" onAction="#accionRegresar" text="Regresar" />
    </children>
 </AnchorPane>

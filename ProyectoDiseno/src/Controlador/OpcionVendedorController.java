@@ -47,8 +47,13 @@ public class OpcionVendedorController implements Initializable {
     }
     @FXML
     private void accionComprar(ActionEvent event) throws IOException {
-        Parent homepParent=FXMLLoader.load(getClass().getResource("/Vista/opcionesComprador.fxml"));
+        FXMLLoader loader=new FXMLLoader();
+        loader.setLocation(getClass().getResource("/Vista/opcionesComprador.fxml"));
+        Parent homepParent=loader.load();
+
         Scene scene =new Scene(homepParent);
+        OpcionesCompradorController op=loader.getController();
+        op.getUser(user);
         Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
         mainstage.hide();
         mainstage.setScene(scene);

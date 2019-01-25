@@ -80,6 +80,8 @@ public class MisproductsController implements Initializable {
     
     @FXML
     private TableColumn<Producto, Integer> cId;
+    @FXML
+    private JFXButton btnRegresar;
     /**
      * Initializes the controller class.
      */
@@ -202,6 +204,21 @@ public class MisproductsController implements Initializable {
     
     private void modificarProducto(){
         
+    }
+
+    @FXML
+    private void accionRegresar(ActionEvent event) throws IOException {
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/opcionesVendedor.fxml"));
+        
+        Parent homepParent=loader.load();
+
+        Scene scene =new Scene(homepParent);
+        Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+        
+        mainstage.hide();
+        mainstage.setScene(scene);
+        mainstage.show();
     }
     
 

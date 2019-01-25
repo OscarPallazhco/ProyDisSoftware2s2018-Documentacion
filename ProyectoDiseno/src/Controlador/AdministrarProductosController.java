@@ -66,6 +66,8 @@ public class AdministrarProductosController implements Initializable {
     private JFXButton btnEliminar;
     ObservableList<Producto> oblist=FXCollections.observableArrayList();
     private int posicionProducto;
+    @FXML
+    private JFXButton btnRegresar;
 
     /**
      * Initializes the controller class.
@@ -116,5 +118,9 @@ public class AdministrarProductosController implements Initializable {
             
             oblist.add(p);
         }
+    }
+
+    @FXML
+    private void accionRegresar(ActionEvent event) {
     }
 }

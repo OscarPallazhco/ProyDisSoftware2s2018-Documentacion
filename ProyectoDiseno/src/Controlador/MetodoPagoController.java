@@ -8,6 +8,7 @@ package Controlador;
 import Modelo.Producto;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
@@ -16,9 +17,14 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 import utils.SingleConexionBD;
 
 /**
@@ -43,6 +49,8 @@ public class MetodoPagoController implements Initializable {
     @FXML
     private JFXButton btnPagar;
     java.sql.Date fechasql;
+    @FXML
+    private JFXButton btnRegresar;
     /**
      * Initializes the controller class.
      */
@@ -82,6 +90,20 @@ public class MetodoPagoController implements Initializable {
         stmt.setString("tipoPago","efectivo");
         stmt.setBoolean("estado", true);
         stmt.executeQuery();
+    }
+
+    @FXML
+    private void accionRegresar(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/busqueda.fxml"));
+        
+        Parent homepParent=loader.load();
+
+        Scene scene =new Scene(homepParent);
+        Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+        
+        mainstage.hide();
+        mainstage.setScene(scene);
+        mainstage.show();
     }
     
 }

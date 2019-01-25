@@ -93,7 +93,13 @@ public class OpcionesVendedorController implements Initializable {
     
 
     @FXML
-    private void accionCerrar(ActionEvent event) {
+    private void accionCerrar(ActionEvent event) throws IOException {
+        Parent homepParent=FXMLLoader.load(getClass().getResource("/Vista/inicio.fxml"));
+        Scene scene =new Scene(homepParent);
+        Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+        mainstage.hide();
+        mainstage.setScene(scene);
+        mainstage.show();
     }
     
 }

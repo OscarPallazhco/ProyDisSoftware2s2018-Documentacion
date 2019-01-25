@@ -14,5 +14,6 @@
       <JFXRadioButton fx:id="rbEfectivo" layoutX="351.0" layoutY="196.0" text="Efectivo" />
       <Label fx:id="labelProducto" layoutX="80.0" layoutY="119.0" prefHeight="33.0" prefWidth="176.0" />
       <TextArea fx:id="textAreaDescripcion" layoutX="80.0" layoutY="171.0" prefHeight="76.0" prefWidth="231.0" />
+      <JFXButton fx:id="btnRegresar" layoutX="448.0" layoutY="357.0" onAction="#accionRegresar" text="Regresar" />
    </children>
 </AnchorPane>
