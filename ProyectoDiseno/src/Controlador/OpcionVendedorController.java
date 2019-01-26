@@ -39,7 +39,7 @@ public class OpcionVendedorController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println(user + " ventana opcionVen init");
+        
         // TODO
     }    
     public void getUser(String user){

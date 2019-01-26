@@ -193,7 +193,7 @@ public class BusquedaController implements Initializable {
     @FXML
     private void compra(MouseEvent event) throws IOException {
         
-        System.out.println(p.getNombre());
+        
         if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount()==2){
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/metodoPago.fxml"));

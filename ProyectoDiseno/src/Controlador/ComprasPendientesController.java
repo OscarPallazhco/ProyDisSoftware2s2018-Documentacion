@@ -41,7 +41,7 @@ public class ComprasPendientesController implements Initializable {
 
     @FXML
     private void accionRegresar(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/opcionesVendedor.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/opcionesComprador.fxml"));
         
         Parent homepParent=loader.load();
 

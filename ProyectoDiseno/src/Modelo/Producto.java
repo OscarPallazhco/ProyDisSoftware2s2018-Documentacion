@@ -20,7 +20,7 @@ public class Producto {
     private int vecesBuscado,id;
     private boolean estado; //para operaciones CRUD
 
-    public Producto(String nombre, String descripcion, String categoria, float tiempoEntrega, float precio, Vendedor vendedor) {
+    public Producto(String nombre, String descripcion, String categoria, float tiempoEntrega, float precio, int id,Vendedor vendedor) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.categoria = categoria;
@@ -29,6 +29,7 @@ public class Producto {
         this.vendedor = vendedor;
         this.vecesBuscado = 0;
         this.estado = true;
+        this.id=id;
     }
     
         public Producto(String nombre, String descripcion, String categoria, float tiempoEntrega, float precio) {
@@ -108,9 +109,9 @@ public class Producto {
         this.precio = precio;
     }
 
-    public Vendedor getVendedor() {
+  /*  public Vendedor getVendedor() {
         return vendedor;
-    }
+    } */
 
     public void setVendedor(Vendedor vendedor) {
         this.vendedor = vendedor;
@@ -180,6 +181,9 @@ public class Producto {
             return false;
         }
         return true;
+    }
+    public String getVendedor(){
+        return vendedor.getNombreUsuario();
     }
     
     

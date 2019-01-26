@@ -50,8 +50,8 @@ public class OpcionesCompradorController implements Initializable {
         
     }   
     
-    public void getUser(String user){
-        this.user=user;
+    public String getUser(String user){
+       return  this.user=user;
     }
 
     @FXML
@@ -107,6 +107,8 @@ public class OpcionesCompradorController implements Initializable {
         Parent homepParent=loader.load();
 
         Scene scene =new Scene(homepParent);
+        MasbuscadosController mb=loader.getController();
+        mb.getUser(user);
         Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
         
         mainstage.hide();

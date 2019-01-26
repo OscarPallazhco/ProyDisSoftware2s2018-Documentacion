@@ -77,6 +77,8 @@ public class MetodoPagoController implements Initializable {
     public void getUser(String user){
         this.user=user;
     }
+    
+ 
 
     @FXML
     private void accionPagar(ActionEvent event) throws SQLException {
