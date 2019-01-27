@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.mysql.jdbc.Connection;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -36,6 +37,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import utils.RegexMatcher;
 import utils.SingleConexionBD;
 
 /**
@@ -129,22 +131,13 @@ public class MisproductsController implements Initializable {
         this.vendedor=vendedor;
     }
     @FXML
-    private void accionAgregar(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/agregarproducto.fxml"));
-        
-        Parent homepParent=loader.load();
-        AgregarproductoController add=loader.getController();
-        add.setUser(userName);
-        Scene scene =new Scene(homepParent);
-        Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
-        
-        mainstage.hide();
-        mainstage.setScene(scene);
-        mainstage.show();
+    private void accionAgregar(ActionEvent event) throws IOException, SQLException {
+        guardarDatos();
+
     }
 
     @FXML
-    private void accionModificar(ActionEvent event) {
+    private void accionModificar(ActionEvent event) throws SQLException {
         Producto p= (Producto) tblproductos.getSelectionModel().getSelectedItem();
         posicionProducto=oblist.indexOf(p);
         p.setNombre(txtNombre.getText());
@@ -153,6 +146,8 @@ public class MisproductsController implements Initializable {
         p.setDescripcion(txtDescripcion.getText());
         p.setTiempoEntrega(Float.parseFloat(txtEntrega.getText()));
         oblist.set(posicionProducto, p);
+        modificarProducto(p.getId(),p.getNombre(), p.getDescripcion(), p.getCategoria(),p.getPrecio()
+                , (int) p.getTiempoEntrega());
         
     }
 
@@ -202,8 +197,17 @@ public class MisproductsController implements Initializable {
         stmt.executeQuery();
     }
     
-    private void modificarProducto(){
-        
+    private void modificarProducto(int id,String nombre, String descripcion, String categoria, float precio, int dias) throws SQLException{
+        SingleConexionBD.conectar();
+        String query="{CALL modificarProducto(?,?,?,?,?,?)}";
+        java.sql.CallableStatement  stmt=SingleConexionBD.conectar().prepareCall(query);
+        stmt.setInt("iduser", id);
+        stmt.setString("descripcion", descripcion);
+        stmt.setString("categoria", categoria);
+        stmt.setString("nombre", nombre);
+        stmt.setInt("tiempoEntrega", dias);
+        stmt.setFloat("precio", precio);
+        stmt.executeQuery();
     }
 
     @FXML
@@ -212,13 +216,44 @@ public class MisproductsController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/opcionesVendedor.fxml"));
         
         Parent homepParent=loader.load();
-
+        OpcionesVendedorController ov=loader.getController();
+        ov.getUser(userName);
         Scene scene =new Scene(homepParent);
         Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
         
         mainstage.hide();
         mainstage.setScene(scene);
         mainstage.show();
+    }
+    
+    private boolean  validarFields(){
+        boolean nombreVacio=RegexMatcher.emptyField(txtNombre.getText().trim());
+        boolean precioVacio=RegexMatcher.emptyField(txtPrecio.getText().trim());
+        boolean categoriaVacio=RegexMatcher.emptyField(txtCategoria.getText().trim());
+        boolean descrpicionVacia=RegexMatcher.emptyField(txtDescripcion.getText().trim());
+        boolean tiempoVacio=RegexMatcher.emptyField(txtEntrega.getText().trim());
+        return !(nombreVacio || precioVacio || categoriaVacio || descrpicionVacia|| tiempoVacio);
+    }
+    
+    
+        private void guardarDatos() throws SQLException{
+        if(validarFields()){
+        String query1= "{CALL guardarProducto(?,?,?,?,?,?)}";
+        CallableStatement  stmt = SingleConexionBD.conectar().prepareCall(query1);
+        stmt.setString("nombre",txtNombre.getText());
+        stmt.setString("descripcion", txtDescripcion.getText());
+        stmt.setString("categoria", txtCategoria.getText());
+        stmt.setFloat("precio", Float.parseFloat(txtPrecio.getText().trim()));
+        stmt.setInt("tiempoEntrega", Integer.parseInt(txtEntrega.getText().trim()));
+        stmt.setString("vendedor",userName);
+        
+        
+        stmt.executeQuery();
+        RegexMatcher.errormsj("Producto agregado con exito");
+        tblproductos.getItems().clear();
+        llenarTabla();
+        }
+        
     }
     
 

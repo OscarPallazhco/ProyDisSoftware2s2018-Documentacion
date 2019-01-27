@@ -96,10 +96,11 @@ public class MetodoPagoController implements Initializable {
 
     @FXML
     private void accionRegresar(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/busqueda.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/opcionesComprador.fxml"));
         
         Parent homepParent=loader.load();
-
+        OpcionesCompradorController op= loader.getController();
+        op.getUser(user);
         Scene scene =new Scene(homepParent);
         Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
         

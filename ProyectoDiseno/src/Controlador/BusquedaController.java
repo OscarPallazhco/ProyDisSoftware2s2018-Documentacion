@@ -104,8 +104,10 @@ public class BusquedaController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/opcionesComprador.fxml"));
         
         Parent homepParent=loader.load();
-
+        OpcionesCompradorController op= loader.getController();
+        op.getUser(usuario);
         Scene scene =new Scene(homepParent);
+        
         Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
         
         mainstage.hide();

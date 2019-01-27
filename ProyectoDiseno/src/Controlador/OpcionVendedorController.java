@@ -71,7 +71,7 @@ public class OpcionVendedorController implements Initializable {
        
         
         Parent p=load.getRoot();
-        Stage s=new Stage();
+        Stage s=(Stage) ((Node)event.getSource()).getScene().getWindow();
         s.setScene(new Scene(p));
         s.show();
     

@@ -70,24 +70,12 @@ public class OpcionesVendedorController implements Initializable {
         productos.setUserName(user);
         
         Parent p=load.getRoot();
-        Stage s=new Stage();
+        Stage s=(Stage) ((Node)event.getSource()).getScene().getWindow();
         s.setScene(new Scene(p));
         s.show();
         
         
-        
-        /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/misproducts.fxml"));
-        Parent homepParent=loader.load();
-        MisproductsController v=loader.getController();
-        
-        v.setUserName(user);
-        System.out.println("ventana opciones "+user);
-        Scene scene =new Scene(homepParent);
-        Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
-        
-        mainstage.hide();
-        mainstage.setScene(scene);
-        mainstage.show(); */
+      
 
     }
     
