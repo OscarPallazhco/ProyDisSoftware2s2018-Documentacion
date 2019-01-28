@@ -153,8 +153,9 @@ public class BusquedaController implements Initializable {
             for (Map.Entry<Integer, Producto> entry : coincidencias.entrySet()) {
             Integer key = entry.getKey();
             Producto value = entry.getValue();
-            if(RegexMatcher.testSearch(txtBuscar.getText(), value.getNombre())||
-                    RegexMatcher.testSearch(txtBuscar.getText(), value.getDescripcion())){
+            boolean coincideNombre = RegexMatcher.testSearch(txtBuscar.getText(), value.getNombre());
+            boolean coincideDescripcion = RegexMatcher.testSearch(txtBuscar.getText(), value.getDescripcion());
+            if(coincideNombre||coincideDescripcion){
                 updateSearch(key);
                 oblist.add(value);
             }

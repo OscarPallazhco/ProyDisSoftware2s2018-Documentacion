@@ -70,17 +70,20 @@ public class InicioSesionController implements Initializable {
         if(!(camposVacios)){
             DataUser temp=null;
             for (DataUser usuario : usuarios) {
-                if(usuario.getUser().equals(txtUser.getText().trim()) && usuario.getContrasena().equals(
-                txtPass.getText())){
+                boolean coincideUsuario = usuario.getUser().equals(txtUser.getText().trim());
+                boolean coincideContrasena = usuario.getContrasena().equals(txtPass.getText());
+                if( coincideUsuario && coincideContrasena ){
                     
                     temp=new DataUser(usuario.getUser(), usuario.getContrasena(), usuario.getRol());
                     
                 }
             }
             if(temp!=null){
-                if(temp.getRol().equals("Vendedor")){
+                boolean usuarioEsVendedor = temp.getRol().equals("Vendedor");
+                boolean usuarioEsComprador = temp.getRol().equals("Comprador");
+                if(usuarioEsVendedor){
                     gotoVendedor(event);
-                }else if(temp.getRol().equals("Comprador")){
+                }else if(usuarioEsComprador){
                     gotoComprador(event);
                 }else{
                     goToAdmin(event);}
