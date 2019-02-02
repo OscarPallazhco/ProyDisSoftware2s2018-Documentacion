@@ -7,15 +7,12 @@ package Controlador;
 
 import Modelo.Producto;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
+import com.mysql.jdbc.Connection;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +33,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import utils.RegexMatcher;
 import utils.SingleConexionBD;
 
 /**
@@ -44,155 +40,100 @@ import utils.SingleConexionBD;
  *
  * @author Patricio
  */
-public class BusquedaController implements Initializable {
+public class MasbuscadosController implements Initializable {
 
     @FXML
-    private JFXButton btnComprar;
-    @FXML
-    private JFXTextField txtBuscar;
-    @FXML
-    private JFXButton btnBuscar;
-    @FXML
-    private TableView<Producto> tblviewBusqueda;
-    
-    private LinkedList<Producto> productos;
+    private TableView<Producto> tblMasBuscados;
     @FXML
     private TableColumn<Producto, String> cNombre;
     @FXML
-    private TableColumn<Producto, Float> cPrecio;
-    @FXML
     private TableColumn<Producto, String> cCategoria;
     @FXML
+    private TableColumn<Producto, Float> cPrecio;
+    @FXML
     private TableColumn<Producto, String> cDescripcion;
+    @FXML
+    private TableColumn<Producto, Integer> cTiempoEntrega;
+    @FXML
+    private TableColumn<Producto, Integer> cId;
+    @FXML
+    private JFXButton bntRegresar;
     ObservableList<Producto> oblist=FXCollections.observableArrayList();
-    HashMap<Integer,Producto> coincidencias;
     Producto p;
     private String usuario;
-    @FXML
-    private TableColumn<Producto, Integer> cID;
-    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        coincidencias =new HashMap<>();
-        
-        
         try {
-            tblviewBusqueda.getSelectionModel().selectedItemProperty().addListener(new ChangeListener(){
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                 p=(Producto) newValue;
+            cargarDatos();
+            tblMasBuscados.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+                @Override
+                public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                p=(Producto) newValue;
                 if(p!=null){
                    
                 }
-            }
-            
-        });
-            cargarProductos();
-            
-            // TODO
+                }
+            });
         } catch (SQLException ex) {
-            Logger.getLogger(BusquedaController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MasbuscadosController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        setMasBuscados();
+        // TODO
     }    
-
+    public void getUser(String user){
+        this.usuario=user;
+    }
     @FXML
     private void accionRegresar(ActionEvent event) throws IOException {
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/opcionesComprador.fxml"));
         
         Parent homepParent=loader.load();
-        OpcionesCompradorController op= loader.getController();
-        op.getUser(usuario);
+
         Scene scene =new Scene(homepParent);
-        
         Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
         
         mainstage.hide();
         mainstage.setScene(scene);
         mainstage.show();
-        
     }
     
-    public void getUsuario(String user){
-        this.usuario=user;
-    }
-
-    @FXML
-    private void accionBuscar(ActionEvent event) throws SQLException {
-        
-        busqueda();
-        setDatos();
-    }
-    //
-    
-    private void  cargarProductos() throws SQLException{
-        SingleConexionBD.conectar();
-        String query="select * from Productos where estado=1";
-        Statement stmt = SingleConexionBD.conectar().createStatement(); 
+    private void cargarDatos() throws SQLException{
+        Connection conectar = SingleConexionBD.conectar();
+        String query="select * from productos "
+                + "where estado=1 "
+              + "ORDER BY numeroBusquedas DESC  "
+              + "LIMIT 15";
+        Statement stmt = conectar.createStatement(); 
         ResultSet rs = stmt.executeQuery(query);
-         while(rs.next()){
-            Integer id=rs.getInt("id");
+        while(rs.next()){
             String nombre= rs.getString("nombre");
-            System.out.println(nombre);
+            
             String descripcion=rs.getString("descripcion");
             String categoria=rs.getString("categoria");
             float precio=rs.getFloat("precio");
             int tiempo=rs.getInt("tiempoEntrega");
-            
+            int id=rs.getInt("id");
             Producto p=new Producto(nombre, descripcion, categoria, tiempo, precio,id);
             
-            coincidencias.put(id, p);
-         }
+            oblist.add(p);
+        }
     }
     
-    private void busqueda() throws SQLException{
-        
-            for (Map.Entry<Integer, Producto> entry : coincidencias.entrySet()) {
-            Integer key = entry.getKey();
-            Producto value = entry.getValue();
-            boolean coincideNombre = RegexMatcher.testSearch(txtBuscar.getText(), value.getNombre());
-            boolean coincideDescripcion = RegexMatcher.testSearch(txtBuscar.getText(), value.getDescripcion());
-            if(coincideNombre||coincideDescripcion){
-                updateSearch(key);
-                oblist.add(value);
-            }
-        }
-
-
-        }
-    
-    private void llenarTable(){
-        
-    }
-    
-    private void setDatos(){
-        
+        private void setMasBuscados(){
         cNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         cPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
         cCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+        cTiempoEntrega.setCellValueFactory(new PropertyValueFactory<>("tiempoEntrega"));
         cDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-        cID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tblviewBusqueda.setItems(oblist);
-    }
-    
-    private void updateSearch(Integer id) throws SQLException{
-        
-        SingleConexionBD.conectar();
-        String query="{CALL actualizarBusqueda(?)}";
-        java.sql.CallableStatement  stmt=SingleConexionBD.conectar().prepareCall(query);
-        
-        stmt.setInt("iduser", id);
-        stmt.executeQuery();
-        
+        tblMasBuscados.setItems(oblist);
+        cId.setCellValueFactory(new PropertyValueFactory<>("id"));
         
     }
-
-
-    
-
+     
     @FXML
     private void compra(MouseEvent event) throws IOException {
         
@@ -213,7 +154,6 @@ public class BusquedaController implements Initializable {
         mainstage.setScene(scene);
         mainstage.show();
     }
-
+    
 }
 }
-

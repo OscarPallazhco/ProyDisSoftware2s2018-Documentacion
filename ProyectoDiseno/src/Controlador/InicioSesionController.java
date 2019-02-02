@@ -14,7 +14,6 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -71,25 +70,30 @@ public class InicioSesionController implements Initializable {
         if(!(camposVacios)){
             DataUser temp=null;
             for (DataUser usuario : usuarios) {
-                if(usuario.getUser().equals(txtUser.getText().trim()) && usuario.getContrasena().equals(
-                txtPass.getText())){
-                    System.out.println(usuario.getUser());
+                boolean coincideUsuario = usuario.getUser().equals(txtUser.getText().trim());
+                boolean coincideContrasena = usuario.getContrasena().equals(txtPass.getText());
+                if( coincideUsuario && coincideContrasena ){
+                    
                     temp=new DataUser(usuario.getUser(), usuario.getContrasena(), usuario.getRol());
                     
                 }
             }
             if(temp!=null){
-                if(temp.getRol().equals("Vendedor")){
+                boolean usuarioEsVendedor = temp.getRol().equals("Vendedor");
+                boolean usuarioEsComprador = temp.getRol().equals("Comprador");
+                if(usuarioEsVendedor){
                     gotoVendedor(event);
-                }else if(temp.getRol().equals("Comprador")){
+                }else if(usuarioEsComprador){
                     gotoComprador(event);
                 }else{
-                    goToAdmin(event);
+                    goToAdmin(event);}
+                }
+                    
                 }
             }
-        }
+        
 
-    }
+    
         
     
 
@@ -113,7 +117,7 @@ public class InicioSesionController implements Initializable {
          ResultSet rs = stmt.executeQuery(query);
         while(rs.next()){
             String user= rs.getString("nombreUsuario");
-            System.out.println(user);
+            
             String pass=rs.getString("contrasena");
             String rol=rs.getString("rol");
             DataUser u= new DataUser(user, pass, rol);
@@ -141,6 +145,8 @@ public class InicioSesionController implements Initializable {
         Parent homepParent=loader.load();
 
         Scene scene =new Scene(homepParent);
+        OpcionesCompradorController comp=loader.getController();
+        comp.getUser(txtUser.getText());
         Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
         
         mainstage.hide();

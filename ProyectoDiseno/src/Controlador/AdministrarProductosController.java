@@ -17,6 +17,8 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -48,7 +50,7 @@ public class AdministrarProductosController implements Initializable {
     @FXML
     private TableColumn<Producto, Float> cTiempo;
     @FXML
-    private TableColumn<String,String> cVendedor;
+    private TableColumn<Producto,Vendedor> cVendedor;
     @FXML
     private JFXTextField txtNombre;
     @FXML
@@ -67,6 +69,10 @@ public class AdministrarProductosController implements Initializable {
     private JFXButton btnEliminar;
     ObservableList<Producto> oblist=FXCollections.observableArrayList();
     private int posicionProducto;
+    @FXML
+    private JFXButton btnRegresar;
+    @FXML
+    private TableColumn<Producto, Integer> cID;
 
     /**
      * Initializes the controller class.
@@ -83,7 +89,24 @@ public class AdministrarProductosController implements Initializable {
         cCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
         cDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         cTiempo.setCellValueFactory(new PropertyValueFactory<>("tiempoEntrega"));
+        cID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        cVendedor.setCellValueFactory(new PropertyValueFactory<>("vendedor"));
         tblproductos.setItems(oblist);
+        
+        tblproductos.getSelectionModel().selectedItemProperty().addListener(new ChangeListener(){
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                Producto p=(Producto) newValue;
+                if(p!=null){
+                    txtNombre.setText(p.getNombre());
+                    txtCategoria.setText(p.getCategoria());
+                    txtDescripcion.setText(p.getDescripcion());
+                    txtPrecio.setText(Float.toString(p.getPrecio()));
+                    txtEntrega.setText(Integer.toString((int) p.getTiempoEntrega()));
+                }
+            }
+            
+        });
     }    
 
     @FXML
@@ -95,15 +118,20 @@ public class AdministrarProductosController implements Initializable {
     }
 
     @FXML
-    private void accionModificar(ActionEvent event) {
+    private void accionModificar(ActionEvent event) throws SQLException {
+
     }
 
     @FXML
-    private void accionEliminar(ActionEvent event) {
+    private void accionEliminar(ActionEvent event) throws SQLException {
+        Producto p= (Producto) tblproductos.getSelectionModel().getSelectedItem();
+        eliminarProducto(p.getId());
+        oblist.remove(p);
+        
     }
     private void llenarTabla() throws SQLException{
         Connection conectar = SingleConexionBD.conectar();
-        String query="select * from Productos";
+        String query="select * from Productos where estado=1";
         Statement stmt = conectar.createStatement(); 
         ResultSet rs = stmt.executeQuery(query);
         while(rs.next()){
@@ -113,9 +141,24 @@ public class AdministrarProductosController implements Initializable {
             String categoria=rs.getString("categoria");
             float precio=rs.getFloat("precio");
             int tiempo=rs.getInt("tiempoEntrega");
-            Producto p=new Producto(nombre, descripcion, categoria, tiempo, precio);
+            int id=rs.getInt("id");
+            Vendedor v=new Vendedor(rs.getString("vendedor"));
+            Producto p=new Producto(nombre, descripcion, categoria, tiempo, precio,id,v);
             
             oblist.add(p);
         }
+    }
+
+    @FXML
+    private void accionRegresar(ActionEvent event) {
+    }
+    
+    private void eliminarProducto(int idproducto) throws SQLException{
+        SingleConexionBD.conectar();
+        String query="{CALL eliminarProducto(?)}";
+        java.sql.CallableStatement  stmt=SingleConexionBD.conectar().prepareCall(query);
+        
+        stmt.setInt("iduser", idproducto);
+        stmt.executeQuery();
     }
 }

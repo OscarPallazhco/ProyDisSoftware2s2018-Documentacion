@@ -25,6 +25,9 @@ public class Vendedor extends Usuario{
         this.productos = new LinkedList<>();
         
     }
+    public Vendedor(String nombreUsuario){
+        super(nombreUsuario);
+    }
    
 
     public float getCalificacion() {
@@ -59,6 +62,8 @@ public class Vendedor extends Usuario{
     public String dirEntregaProd(Producto p){
         return "";
     }
+    
+
     
     
 }

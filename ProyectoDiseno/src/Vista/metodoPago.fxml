@@ -1,28 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXRadioButton?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="536.0" styleClass="root1" stylesheets="@../fondo.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="536.0" styleClass="root1" stylesheets="@../fondo.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MetodoPagoController">
    <children>
-      <JFXButton layoutX="257.0" layoutY="294.0" styleClass="lion-default" stylesheets="@../styles1.css" text="Pagar" />
-      <JFXCheckBox layoutX="291.0" layoutY="187.0" text="Efectivo " />
-      <JFXCheckBox layoutX="291.0" layoutY="230.0" prefHeight="18.0" prefWidth="89.0" text="Saldo App" />
-      <ImageView fitHeight="101.0" fitWidth="122.0" layoutX="207.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Downloads/68-512.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="113.0" fitWidth="126.0" layoutX="73.0" layoutY="159.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Downloads/Laptop_B-512.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="285.0" layoutY="151.0" text="Metodo de Pago" />
+      <JFXButton fx:id="btnPagar" layoutX="166.0" layoutY="303.0" onAction="#accionPagar" styleClass="lion-default" stylesheets="@../styles1.css" text="Pagar" />
+      <Label layoutX="339.0" layoutY="93.0" text="Metodo de Pago" />
+      <JFXRadioButton fx:id="rbSaldo" layoutX="351.0" layoutY="143.0" text="Saldo App" />
+      <JFXRadioButton fx:id="rbEfectivo" layoutX="351.0" layoutY="196.0" text="Efectivo" />
+      <Label fx:id="labelProducto" layoutX="80.0" layoutY="119.0" prefHeight="33.0" prefWidth="176.0" />
+      <TextArea fx:id="textAreaDescripcion" layoutX="80.0" layoutY="171.0" prefHeight="76.0" prefWidth="231.0" />
+      <JFXButton fx:id="btnRegresar" layoutX="448.0" layoutY="357.0" onAction="#accionRegresar" text="Regresar" />
    </children>
 </AnchorPane>

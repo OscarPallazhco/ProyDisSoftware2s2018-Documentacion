@@ -15,6 +15,7 @@
             <TableColumn fx:id="cCategoria" prefWidth="82.0" text="Categoria" />
             <TableColumn fx:id="cDescripcion" prefWidth="119.0" text="Descripcion" />
             <TableColumn fx:id="cTiempo" prefWidth="113.0" text="Tiempo Entrega" />
+            <TableColumn fx:id="cId" prefWidth="75.0" text="Id" />
         </columns>
       </TableView>
       <JFXTextField fx:id="txtNombre" layoutX="514.0" layoutY="28.0" promptText="Nombre" />
@@ -25,5 +26,6 @@
       <JFXButton fx:id="btnAgregar" layoutX="456.0" layoutY="305.0" onAction="#accionAgregar" text="Agregar" />
       <JFXButton fx:id="btnModificar" layoutX="552.0" layoutY="305.0" onAction="#accionModificar" text="Modificar" />
       <JFXButton fx:id="btnEliminar" layoutX="655.0" layoutY="305.0" onAction="#accionEliminar" text="Eliminar" />
+      <JFXButton fx:id="btnRegresar" layoutX="461.0" layoutY="420.0" onAction="#accionRegresar" text="Regresar" />
    </children>
 </AnchorPane>

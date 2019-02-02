@@ -105,67 +105,57 @@ public class InicioController implements Initializable {
 
     }
     
-    private void cargarDatos() throws SQLException{
-        
-        Connection conectar = SingleConexionBD.conectar();
+    private void cargarDatos() throws SQLException{                
         String query="select * from productos "
+                + "where estado=1 "
               + "ORDER BY numeroBusquedas DESC  "
               + "LIMIT 15";
-        Statement stmt = conectar.createStatement(); 
+        llenarObservableList(query,oblist);              
+    }
+    
+    private void cargarNuevos() throws SQLException{
+        String query="select * from productos "
+              + "where estado=1 "
+              + "order by id desc "
+              + "LIMIT 15";
+        llenarObservableList(query,oblistNuevos);
+    }
+    
+    private void llenarObservableList(String query, ObservableList<Producto> obList) throws SQLException{
+        Statement stmt = SingleConexionBD.conectar().createStatement(); 
         ResultSet rs = stmt.executeQuery(query);
         while(rs.next()){
-            String nombre= rs.getString("nombre");
-            
+            String nombre= rs.getString("nombre");           
             String descripcion=rs.getString("descripcion");
             String categoria=rs.getString("categoria");
             float precio=rs.getFloat("precio");
             int tiempo=rs.getInt("tiempoEntrega");
-            Producto p=new Producto(nombre, descripcion, categoria, tiempo, precio);
-            
-            oblist.add(p);
-        }
-        
-        
+            Producto p=new Producto(nombre, descripcion, categoria, tiempo, precio);            
+            obList.add(p);
+        }     
     }
-
+    
+    
 
     @FXML
     private void accionProducto(MouseEvent event) throws IOException {
         if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount()==2){
-         System.out.println("Bien ");
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/inicioSesion.fxml"));
         
         Parent homepParent=loader.load();
         InicioSesionController controla=loader.getController();
-        controla.getDato("soy uriel");
+        
         Scene scene =new Scene(homepParent);
         Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
         
         mainstage.hide();
         mainstage.setScene(scene);
-        mainstage.show();
-            
+        mainstage.show();            
         }
     }
     
-    private void cargarNuevos() throws SQLException{
-      String query="select * from productos "
-              + "order by id desc "
-              + "LIMIT 15";
-      Statement stmt=  SingleConexionBD.conectar().createStatement();
-       ResultSet rs = stmt.executeQuery(query);
-        while(rs.next()){
-            String nombre= rs.getString("nombre");
-            
-            String descripcion=rs.getString("descripcion");
-            String categoria=rs.getString("categoria");
-            float precio=rs.getFloat("precio");
-            int tiempo=rs.getInt("tiempoEntrega");
-            Producto p=new Producto(nombre, descripcion, categoria, tiempo, precio);
-            
-            oblistNuevos.add(p);
-        }
-    }
+
     private void setMasBuscados(){
         tblnombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         tblprecio.setCellValueFactory(new PropertyValueFactory<>("precio"));

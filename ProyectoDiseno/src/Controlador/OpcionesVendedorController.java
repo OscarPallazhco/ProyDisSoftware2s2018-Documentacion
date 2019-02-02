@@ -8,6 +8,7 @@ package Controlador;
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,12 +33,14 @@ public class OpcionesVendedorController implements Initializable {
     @FXML
     private JFXButton btnCerrarSesion;
     
-    public static String user;
+    String user;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        
         // TODO
     }    
 
@@ -58,25 +61,33 @@ public class OpcionesVendedorController implements Initializable {
     }
 
     @FXML
-    private void accionMisproductos(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/misproducts.fxml"));
-        Parent homepParent=loader.load();
-        MisproductsController v=loader.getController();
+    private void accionMisproductos(ActionEvent event) throws IOException, SQLException {
         
-        v.setUserName(user);
-        System.out.println("ventana opciones "+user);
-        Scene scene =new Scene(homepParent);
-        Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+        FXMLLoader load=new FXMLLoader();
+        load.setLocation(getClass().getResource("/Vista/misproducts.fxml"));
+        load.load();
+        MisproductsController productos=load.getController();
+        productos.setUserName(user);
         
-        mainstage.hide();
-        mainstage.setScene(scene);
-        mainstage.show();
+        Parent p=load.getRoot();
+        Stage s=(Stage) ((Node)event.getSource()).getScene().getWindow();
+        s.setScene(new Scene(p));
+        s.show();
+        
+        
+      
 
     }
     
 
     @FXML
-    private void accionCerrar(ActionEvent event) {
+    private void accionCerrar(ActionEvent event) throws IOException {
+        Parent homepParent=FXMLLoader.load(getClass().getResource("/Vista/inicio.fxml"));
+        Scene scene =new Scene(homepParent);
+        Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+        mainstage.hide();
+        mainstage.setScene(scene);
+        mainstage.show();
     }
     
 }

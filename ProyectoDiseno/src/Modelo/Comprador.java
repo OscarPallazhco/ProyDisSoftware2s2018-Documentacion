@@ -8,6 +8,7 @@ package Modelo;
 
 import Modelo.Observer.Compra;
 import java.util.LinkedList;
+import utils.SingleConexionBD;
 
 /**
  *
@@ -58,5 +59,6 @@ public class Comprador extends Usuario{
         LinkedList<Compra> result =new LinkedList<>();
         return result;
     }
+
 
 }

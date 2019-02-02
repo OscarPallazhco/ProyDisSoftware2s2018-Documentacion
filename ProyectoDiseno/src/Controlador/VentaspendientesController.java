@@ -5,8 +5,10 @@
  */
 package Controlador;
 
+import com.jfoenix.controls.JFXButton;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
@@ -20,6 +22,8 @@ public class VentaspendientesController implements Initializable {
 
     @FXML
     private TableView<?> tblviewVentas;
+    @FXML
+    private JFXButton btnRegresar;
 
     /**
      * Initializes the controller class.
@@ -28,5 +32,9 @@ public class VentaspendientesController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void accionRegresar(ActionEvent event) {
+    }
     
 }

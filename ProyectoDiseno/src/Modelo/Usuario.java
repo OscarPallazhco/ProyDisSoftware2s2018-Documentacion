@@ -29,6 +29,9 @@ public abstract class Usuario {
         this.estado = estado;
         this.tieneWs = tieneWs;
     }
+    public Usuario(String nombreUser){
+        this.nombreUsuario=nombreUser;
+    }
 
     public String getNombreUsuario() {
         return nombreUsuario;

@@ -5,6 +5,7 @@
  */
 package Controlador;
 
+import Modelo.Comprador;
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
@@ -35,6 +36,10 @@ public class OpcionesCompradorController implements Initializable {
     private JFXButton btnCerrarSesion;
     @FXML
     private JFXButton btnMasBuscados;
+    
+    Comprador comprador;
+    
+    String user;
 
     /**
      * Initializes the controller class.
@@ -42,13 +47,25 @@ public class OpcionesCompradorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+        
+    }   
+    
+    public String getUser(String user){
+       return  this.user=user;
+    }
 
     @FXML
     private void accionBuscar(ActionEvent event) throws IOException {
-        Parent homepParent=FXMLLoader.load(getClass().getResource("/Vista/busqueda.fxml"));
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/busqueda.fxml"));
+        
+        Parent homepParent=loader.load();
+
         Scene scene =new Scene(homepParent);
+        BusquedaController busqueda=loader.getController();
+        busqueda.getUsuario(user);
+        
         Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+        
         mainstage.hide();
         mainstage.setScene(scene);
         mainstage.show();
@@ -72,11 +89,31 @@ public class OpcionesCompradorController implements Initializable {
     }
 
     @FXML
-    private void accionCerrarSesion(ActionEvent event) {
+    private void accionCerrarSesion(ActionEvent event) throws IOException {
+        Parent homepParent=FXMLLoader.load(getClass().getResource("/Vista/inicio.fxml"));
+        Scene scene =new Scene(homepParent);
+        Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+        mainstage.hide();
+        mainstage.setScene(scene);
+        mainstage.show();
+        
     }
 
     @FXML
-    private void btnMasbuscados(ActionEvent event) {
+    private void btnMasbuscados(ActionEvent event) throws IOException {
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/masbuscados.fxml"));
+        
+        Parent homepParent=loader.load();
+
+        Scene scene =new Scene(homepParent);
+        MasbuscadosController mb=loader.getController();
+        mb.getUser(user);
+        Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();
+        
+        mainstage.hide();
+        mainstage.setScene(scene);
+        mainstage.show();
     }
     
 }
