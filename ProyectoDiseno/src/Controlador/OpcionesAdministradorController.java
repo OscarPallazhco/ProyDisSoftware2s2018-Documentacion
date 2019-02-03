@@ -43,7 +43,7 @@ public class OpcionesAdministradorController implements Initializable {
     @FXML
     private void accionAdminUsers(ActionEvent event) throws IOException {
         
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/administrarProductos.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/administrarUsuarios.fxml"));
         
         Parent homepParent=loader.load();
 
