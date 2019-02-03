@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class SingleConexionBD {
     private static final String URL = "jdbc:mysql://localhost:3306/poliventas";
     private static final String USUARIO = "root";
-    private static final String CONTRASENA = "123456";
+    private static final String CONTRASENA = "root";
     private static Connection instancia = null;
     
     public static Connection conectar(){
