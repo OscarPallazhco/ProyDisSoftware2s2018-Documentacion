@@ -193,7 +193,7 @@ INSERT INTO Compras(fecha, calificacionVendedor, calificacionProducto, comprador
 VALUES("2019-02-01", 1, 4, 'adalove', 9,'efectivo');
 
 INSERT INTO Compras(fecha, calificacionVendedor, calificacionProducto, comprador, producto, tipoPago)
-VALUES("2019-02-01", 4, 4, 'bianramo', 10,'efectivo');
+VALUES("2019-02-01", 4, 4, 'biaramo', 10,'efectivo');
 
 INSERT INTO Compras(fecha, calificacionVendedor, calificacionProducto, comprador, producto, tipoPago)
 VALUES("2019-02-01", 4, 5, 'rramirez', 10,'aplicacion');
