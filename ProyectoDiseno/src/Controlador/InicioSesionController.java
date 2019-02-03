@@ -74,29 +74,31 @@ public class InicioSesionController implements Initializable {
                 boolean coincideContrasena = usuario.getContrasena().equals(txtPass.getText());
                 if( coincideUsuario && coincideContrasena ){
                     
-                    temp=new DataUser(usuario.getUser(), usuario.getContrasena(), usuario.getRol());
+                    temp=new DataUser(usuario.getUser(), usuario.getContrasena(), usuario.getRol(),usuario.getEstado());
                     
                 }
             }
             if(temp!=null){
-                boolean usuarioEsVendedor = temp.getRol().equals("Vendedor");
-                boolean usuarioEsComprador = temp.getRol().equals("Comprador");
-                if(usuarioEsVendedor){
+                boolean usuarioEsVendedor = temp.getRol().equalsIgnoreCase("Vendedor");
+                boolean usuarioEsComprador = temp.getRol().equalsIgnoreCase("Comoprador");
+                boolean usuarioEsAdmin = temp.getRol().equalsIgnoreCase("Administrador");
+                boolean usuarioEsHabilitado = temp.getEstado();
+                if(usuarioEsVendedor && usuarioEsHabilitado){
                     gotoVendedor(event);
-                }else if(usuarioEsComprador){
+                }else if(usuarioEsComprador && usuarioEsHabilitado){
                     gotoComprador(event);
+                }else if(usuarioEsAdmin && usuarioEsHabilitado){
+                    goToAdmin(event);
                 }else{
-                    goToAdmin(event);}
+                    System.out.println("Usuario no Habilitado");
                 }
-                    
-                }
+            }else{
+                System.out.println("Usuario no Registrado");
             }
+                    
+        }
+    }
         
-
-    
-        
-    
-
     @FXML
     private void accionRegistrar(ActionEvent event) throws IOException {
         Parent homepParent=FXMLLoader.load(getClass().getResource("/Vista/registro.fxml"));
@@ -116,11 +118,11 @@ public class InicioSesionController implements Initializable {
          Statement stmt=  SingleConexionBD.conectar().createStatement();
          ResultSet rs = stmt.executeQuery(query);
         while(rs.next()){
-            String user= rs.getString("nombreUsuario");
-            
+            String user= rs.getString("nombreUsuario");            
             String pass=rs.getString("contrasena");
             String rol=rs.getString("rol");
-            DataUser u= new DataUser(user, pass, rol);
+            boolean estado=rs.getBoolean("estado");  
+            DataUser u= new DataUser(user, pass, rol,estado);
             usuarios.add(u);
 
     }
