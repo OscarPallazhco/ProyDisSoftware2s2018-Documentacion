@@ -10,6 +10,7 @@ import Modelo.Observer.Vendedor;
 import Modelo.Producto;
 import com.jfoenix.controls.JFXButton;
 import com.mysql.jdbc.Connection;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
@@ -24,12 +25,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 import utils.SingleConexionBD;
 
 /**
@@ -55,6 +62,7 @@ public class AdministrarUsuariosController implements Initializable {
     private JFXButton btnEliminar;
     @FXML
     private JFXButton btnRegresar;
+    private DataUser userSelect;
     
     ObservableList<DataUser> oblist=FXCollections.observableArrayList();
 
@@ -72,9 +80,19 @@ public class AdministrarUsuariosController implements Initializable {
         cRol.setCellValueFactory(new PropertyValueFactory<>("rol"));
         cEstado.setCellValueFactory(new PropertyValueFactory<DataUser,Boolean>("estado"));
         cEstado.setVisible(false);
-        
-        
+                
         tblUsuarios.setItems(oblist);                   
+        
+        tblUsuarios.getSelectionModel().selectedItemProperty().addListener(new ChangeListener(){
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                DataUser u=(DataUser) newValue;
+                if(u!=null){
+                    userSelect = u;                    
+                }
+            }
+        });
+
     }    
 
     private void llenarTabla() throws SQLException{
@@ -93,18 +111,25 @@ public class AdministrarUsuariosController implements Initializable {
         }
     }
     
-    private static void eliminarComprador(String nombreComprador) throws SQLException{        
-        String query="{CALL eliminarComprador(?)}";
+     private static void eliminarUsuario(DataUser usuarioElim) throws SQLException{        
+        String query="{CALL eliminarUsuario(?)}";
         CallableStatement  stmt=SingleConexionBD.conectar().prepareCall(query);        
-        stmt.setString("compradorElim", nombreComprador);
+        stmt.setString("usuarioElim", usuarioElim.getUser());
         stmt.executeQuery();
-    }
-    
-    private static void eliminarVendedor(String nombreComprador) throws SQLException{        
-        String query="{CALL eliminarComprador(?)}";
-        CallableStatement  stmt=SingleConexionBD.conectar().prepareCall(query);        
-        stmt.setString("compradorElim", nombreComprador);
+        //Eliminar de tabla comprador, vendedor o admin
+        boolean esComprador = usuarioElim.getRol().equalsIgnoreCase("Comprador");
+        boolean esVendedor = usuarioElim.getRol().equalsIgnoreCase("Vendedor");
+        if(esComprador){
+            query="{CALL eliminarComprador(?)}";
+        }else if(esVendedor){
+            query="{CALL eliminarVendedor(?)}";
+        }else{
+            query="{CALL eliminarAdministrador(?)}";
+        }
+        stmt = SingleConexionBD.conectar().prepareCall(query);        
+        stmt.setString("usuarioElim", usuarioElim.getUser());
         stmt.executeQuery();
+        
     }
     
     @FXML
@@ -120,11 +145,27 @@ public class AdministrarUsuariosController implements Initializable {
     }
 
     @FXML
-    private void accionEliminar(ActionEvent event) {
+    private void accionEliminar(ActionEvent event) throws SQLException {
+        if(userSelect != null){
+            eliminarUsuario(userSelect);
+            oblist.remove(userSelect);
+            String rol = userSelect.getRol();
+            String usuario = userSelect.getUser();            
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"No se ha seleccionado usuario");
+        }
     }
 
     @FXML
-    private void accionRegresar(ActionEvent event) {
+    private void accionRegresar(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/opcionesAdministrador.fxml"));        
+        Parent homepParent=loader.load();
+        Scene scene =new Scene(homepParent);
+        Stage mainstage=(Stage) ((Node)event.getSource()).getScene().getWindow();        
+        mainstage.hide();
+        mainstage.setScene(scene);
+        mainstage.show();
     }
     
 }
