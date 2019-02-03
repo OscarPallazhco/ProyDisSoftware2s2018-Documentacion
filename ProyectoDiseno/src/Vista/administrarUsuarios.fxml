@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="736.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.AdministrarUsuariosController">
+   <children>
+      <TableView fx:id="tblUsuarios" layoutY="-5.0" onMouseClicked="#accionClick" prefHeight="474.0" prefWidth="467.0">
+        <columns>
+          <TableColumn fx:id="cUsuario" prefWidth="75.0" text="Usuario" />
+          <TableColumn fx:id="cRol" prefWidth="75.0" text="Rol" />
+            <TableColumn fx:id="cEstado" prefWidth="75.0" text="Estado" />
+        </columns>
+      </TableView>
+      <JFXButton fx:id="btnAgregar" layoutX="480.0" layoutY="305.0" onAction="#accionAgregar" text="Agregar" />
+      <JFXButton fx:id="btnModificar" layoutX="567.0" layoutY="305.0" onAction="#accionModificar" text="Modificar" />
+      <JFXButton fx:id="btnEliminar" layoutX="655.0" layoutY="305.0" onAction="#accionEliminar" text="Eliminar" />
+      <JFXButton fx:id="btnRegresar" layoutX="480.0" layoutY="427.0" onAction="#accionRegresar" text="Regresar" />
+   </children>
+</AnchorPane>
