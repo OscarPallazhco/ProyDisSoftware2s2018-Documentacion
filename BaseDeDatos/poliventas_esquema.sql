@@ -128,6 +128,33 @@ BEGIN
 update Productos set estado=0 where id=iduser ;
 END$$
 
+DELIMITER $$
+DROP PROCEDURE IF EXISTS eliminarUsuario$$
+CREATE PROCEDURE eliminarUsuario(usuarioElim varchar(15))
+BEGIN
+update Usuarios set estado=0 where nombreUsuario=usuarioElim;
+END$$
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS eliminarComprador$$
+CREATE PROCEDURE eliminarComprador(usuarioElim varchar(15))
+BEGIN
+update Compradores set estado=0 where nombreUsuario=usuarioElim;
+END$$
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS eliminarVendedor$$
+CREATE PROCEDURE eliminarVendedor(usuarioElim varchar(15))
+BEGIN
+update Vendedores set estado=0 where nombreUsuario=usuarioElim;
+END$$
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS eliminarAdministrador$$
+CREATE PROCEDURE eliminarAdministrador(usuarioElim varchar(15))
+BEGIN
+update Administradores set estado=0 where nombreUsuario=usuarioElim;
+END$$
 
 DELIMITER //
 CREATE TRIGGER trig_actualizarCalificacion BEFORE INSERT 
