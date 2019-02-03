@@ -52,6 +52,7 @@ CREATE TABLE Usuarios(
 	nombreUsuario varchar(15),
     contrasena varchar(30),
     rol varchar(20),
+    estado boolean DEFAULT 1,
     PRIMARY KEY(nombreUsuario)
 );
 
