@@ -15,14 +15,20 @@ public class DataUser {
     private String user;
     private String contrasena;
     private String rol;
+    private boolean estado;
 
-    public DataUser(String user, String contrasena, String rol) {
+    public DataUser(String user, String contrasena, String rol, boolean estado) {
         this.user = user;
         this.contrasena = contrasena;
         this.rol = rol;
+        this.estado = estado;
     }
-
     
+    
+    public DataUser(String user,String rol) {
+        this.user = user;
+        this.rol = rol;
+    }
     
     public String getUser() {
         return user;
@@ -47,6 +53,16 @@ public class DataUser {
     public void setRol(String rol) {
         this.rol = rol;
     }
+
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+    
+    
 
     @Override
     public int hashCode() {
