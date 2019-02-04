@@ -171,7 +171,7 @@ public class AdministrarProductosController implements Initializable {
         String query="{CALL eliminarProducto(?)}";
         java.sql.CallableStatement  stmt=SingleConexionBD.conectar().prepareCall(query);
         
-        stmt.setInt("iduser", idproducto);
+        stmt.setInt("idprod", idproducto);
         stmt.executeQuery();
     }
 }

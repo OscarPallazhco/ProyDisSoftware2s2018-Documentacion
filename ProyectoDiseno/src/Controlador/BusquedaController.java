@@ -184,7 +184,7 @@ public class BusquedaController implements Initializable {
         String query="{CALL actualizarBusqueda(?)}";
         java.sql.CallableStatement  stmt=SingleConexionBD.conectar().prepareCall(query);
         
-        stmt.setInt("iduser", id);
+        stmt.setInt("idprod", id);
         stmt.executeQuery();
         
         

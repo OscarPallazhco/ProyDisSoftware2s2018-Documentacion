@@ -193,7 +193,7 @@ public class MisproductsController implements Initializable {
         String query="{CALL eliminarProducto(?)}";
         java.sql.CallableStatement  stmt=SingleConexionBD.conectar().prepareCall(query);
         
-        stmt.setInt("iduser", id);
+        stmt.setInt("idprod", id);
         stmt.executeQuery();
     }
     
@@ -201,7 +201,7 @@ public class MisproductsController implements Initializable {
         SingleConexionBD.conectar();
         String query="{CALL modificarProducto(?,?,?,?,?,?)}";
         java.sql.CallableStatement  stmt=SingleConexionBD.conectar().prepareCall(query);
-        stmt.setInt("iduser", id);
+        stmt.setInt("idprod", id);
         stmt.setString("descripcion", descripcion);
         stmt.setString("categoria", categoria);
         stmt.setString("nombre", nombre);
@@ -238,7 +238,7 @@ public class MisproductsController implements Initializable {
     
         private void guardarDatos() throws SQLException{
         if(validarFields()){
-        String query1= "{CALL guardarProducto(?,?,?,?,?,?)}";
+        String query1= "{CALL ingresarProducto(?,?,?,?,?,?)}";
         CallableStatement  stmt = SingleConexionBD.conectar().prepareCall(query1);
         stmt.setString("nombre",txtNombre.getText());
         stmt.setString("descripcion", txtDescripcion.getText());

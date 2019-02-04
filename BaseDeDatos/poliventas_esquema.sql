@@ -106,8 +106,21 @@ INSERT INTO Vendedores (nombreUsuario,nombre,apellido,tieneWhatsapp,correo,direc
 END$$
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS guardarProducto$$
-CREATE PROCEDURE guardarProducto(nombre varchar(50),descripcion VARCHAR(500),categoria varchar(10),precio float,tiempoEntrega int,
+DROP PROCEDURE IF EXISTS ingresarCompra$$
+CREATE PROCEDURE ingresarCompra(fecha Date,
+    
+    estado boolean,
+    tipoPago varchar(10),
+    comprador varchar(15),
+    producto int)
+BEGIN
+	INSERT INTO Compras (fecha,estado,tipoPago,comprador,producto)
+	VALUES(fecha,estado,tipoPago,comprador,producto);
+END$$
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS ingresarProducto$$
+CREATE PROCEDURE ingresarProducto(nombre varchar(50),descripcion VARCHAR(500),categoria varchar(10),precio float,tiempoEntrega int,
 vendedor varchar(10))
 BEGIN
 INSERT INTO Productos (nombre,descripcion,categoria,precio,tiempoEntrega,vendedor)
@@ -115,17 +128,26 @@ INSERT INTO Productos (nombre,descripcion,categoria,precio,tiempoEntrega,vendedo
 END$$
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS actualizarBusqueda$$
-CREATE PROCEDURE actualizarBusqueda(iduser int)
+DROP PROCEDURE IF EXISTS modificarProducto$$
+CREATE PROCEDURE modificarProducto(idprod int,nombre varchar(50),descripcion varchar(500),categoria varchar(10),
+tiempoEntrega int, precio float)
 BEGIN
-update Productos set numeroBusquedas=numeroBusquedas+1 where id=iduser ;
+update Productos set nombre=nombre, descripcion=descripcion,categoria=categoria,
+tiempoEntrega=tiempoEntrega, precio=precio where id=idprod ;
+END$$
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS actualizarBusqueda$$
+CREATE PROCEDURE actualizarBusqueda(idprod int)
+BEGIN
+update Productos set numeroBusquedas=numeroBusquedas+1 where id=idprod ;
 END$$
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS eliminarProducto$$
-CREATE PROCEDURE eliminarProducto(iduser int)
+CREATE PROCEDURE eliminarProducto(idprod int)
 BEGIN
-update Productos set estado=0 where id=iduser ;
+update Productos set estado=0 where id=idprod ;
 END$$
 
 DELIMITER $$
