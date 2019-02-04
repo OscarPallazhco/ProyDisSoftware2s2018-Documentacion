@@ -49,11 +49,11 @@ public class BusquedaController implements Initializable {
     @FXML
     private JFXButton btnComprar;
     @FXML
-    private JFXTextField txtBuscar;
+    public JFXTextField txtBuscar;
     @FXML
     private JFXButton btnBuscar;
     @FXML
-    private TableView<Producto> tblviewBusqueda;
+    public TableView<Producto> tblviewBusqueda;
     
     private LinkedList<Producto> productos;
     @FXML
@@ -121,7 +121,7 @@ public class BusquedaController implements Initializable {
     }
 
     @FXML
-    private void accionBuscar(ActionEvent event) throws SQLException {
+    public void accionBuscar(ActionEvent event) throws SQLException {
         
         busqueda();
         setDatos();
@@ -164,11 +164,7 @@ public class BusquedaController implements Initializable {
 
         }
     
-    private void llenarTable(){
-        
-    }
-    
-    private void setDatos(){
+    public void setDatos(){
         
         cNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         cPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
@@ -189,8 +185,6 @@ public class BusquedaController implements Initializable {
         
         
     }
-
-
     
 
     @FXML
