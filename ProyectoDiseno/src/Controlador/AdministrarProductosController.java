@@ -33,6 +33,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import utils.SingleConexionBD;
 
@@ -120,7 +121,7 @@ public class AdministrarProductosController implements Initializable {
     }
 
     @FXML
-    private void accionAgregar(ActionEvent event) {
+    private void accionAgregar(ActionEvent event) throws IOException {  
     }
 
     @FXML
