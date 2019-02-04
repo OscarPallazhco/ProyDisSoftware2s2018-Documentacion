@@ -35,6 +35,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import utils.SingleConexionBD;
@@ -137,7 +138,13 @@ public class AdministrarUsuariosController implements Initializable {
     }
 
     @FXML
-    private void accionAgregar(ActionEvent event) {
+    private void accionAgregar(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Vista/registro.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root1));  
+        stage.show();
     }
 
     @FXML
